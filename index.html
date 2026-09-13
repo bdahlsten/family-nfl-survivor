@@ -1,0 +1,2187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Family NFL Survivor</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f4f5f7;
+            color: #222;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        input,
+        button {
+            font-size: 16px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        #login {
+            max-width: 450px;
+            margin: 60px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        #loginButton {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        #message {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        #app {
+            display: none;
+        }
+
+        #welcome {
+            margin-bottom: 5px;
+        }
+
+        #weekInfo {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #pickStatus {
+            background: white;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+        }
+
+        #pickStatusTitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        #pickStatusTeam {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        #pickStatusNote {
+            margin-top: 7px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        #pickMessage {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .section-title {
+            margin-top: 28px;
+            margin-bottom: 12px;
+        }
+
+        #standings,
+        #familyPicks {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+            margin-bottom: 25px;
+        }
+
+        .standing-row,
+        .family-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            border-bottom: 1px solid #eee;
+            gap: 12px;
+        }
+
+        .standing-row:last-child,
+        .family-row:last-child {
+            border-bottom: none;
+        }
+
+        .standing-name,
+        .player-name {
+            font-weight: bold;
+        }
+
+        .standing-info {
+            text-align: right;
+        }
+
+        .strike-count {
+            font-weight: bold;
+        }
+
+        .alive {
+            color: #176629;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .eliminated {
+            color: #a21d1d;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 3px;
+        }
+
+        .player-pick {
+            text-align: right;
+        }
+
+        .hidden-pick {
+            color: #888;
+            font-style: italic;
+        }
+
+        .my-pick-label {
+            font-size: 11px;
+            background: #e5efff;
+            padding: 3px 6px;
+            border-radius: 8px;
+            margin-left: 6px;
+            color: #2557a7;
+        }
+
+        #commissionerPanel {
+            display: none;
+            background: #fff8dd;
+            border: 1px solid #d8c67a;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 25px;
+        }
+
+        #commissionerPanel h3 {
+            margin-top: 0;
+        }
+
+        .admin-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .admin-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .admin-week-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .admin-week-buttons button,
+        #saveWeekButton {
+            padding: 11px;
+            width: 100%;
+        }
+
+        #saveWeekButton {
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        #commissionerMessage {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        #games {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 10px;
+        }
+
+        .kickoff {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .status {
+            font-size: 13px;
+            font-weight: bold;
+            padding: 5px 9px;
+            border-radius: 12px;
+        }
+
+        .status.available {
+            background: #e5f7e8;
+            color: #176629;
+        }
+
+        .status.locked {
+            background: #eee;
+            color: #666;
+        }
+
+        .teams {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .team-button {
+            padding: 14px 10px;
+            border-radius: 8px;
+            border: 1px solid #aaa;
+            background: white;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .team-button:not(:disabled):hover {
+            background: #f0f4ff;
+        }
+
+        .team-button.selected {
+            background: #dce8ff;
+            border: 2px solid #2557a7;
+        }
+
+        .team-button:disabled {
+            background: #eee;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .team-button.selected:disabled {
+            background: #dce8ff;
+            color: #222;
+            border: 2px solid #2557a7;
+        }
+
+        .team-button.used {
+            background: #f3f3f3;
+            color: #888;
+            text-decoration: line-through;
+        }
+
+        .used-label {
+            display: block;
+            margin-top: 4px;
+            font-size: 11px;
+            text-decoration: none;
+        }
+
+        #logoutButton {
+            width: 100%;
+            padding: 12px;
+            margin-top: 25px;
+        }
+
+        #loading {
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 500px) {
+
+            .teams,
+            .admin-fields {
+                grid-template-columns: 1fr;
+            }
+
+            .family-row,
+            .standing-row {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div id="login">
+
+        <h1>Family NFL Survivor</h1>
+
+        <input
+            id="email"
+            type="email"
+            placeholder="Email"
+        >
+
+        <input
+            id="password"
+            type="password"
+            placeholder="Password"
+        >
+
+        <button id="loginButton">
+            Sign In
+        </button>
+
+        <div id="message"></div>
+
+    </div>
+
+
+    <div id="app">
+
+        <h1 id="poolName">
+            Family NFL Survivor
+        </h1>
+
+        <h2 id="welcome"></h2>
+
+        <div id="weekInfo"></div>
+
+
+        <!-- COMMISSIONER CONTROLS -->
+
+        <div id="commissionerPanel">
+
+            <h3>
+                Commissioner Controls
+            </h3>
+
+            <div class="admin-fields">
+
+                <div class="admin-field">
+
+                    <label for="adminSeason">
+                        Season
+                    </label>
+
+                    <input
+                        id="adminSeason"
+                        type="number"
+                        min="2020"
+                        max="2100"
+                    >
+
+                </div>
+
+
+                <div class="admin-field">
+
+                    <label for="adminWeek">
+                        Week
+                    </label>
+
+                    <input
+                        id="adminWeek"
+                        type="number"
+                        min="1"
+                        max="22"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-week-buttons">
+
+                <button id="previousWeekButton">
+                    Previous Week
+                </button>
+
+                <button id="nextWeekButton">
+                    Next Week
+                </button>
+
+            </div>
+
+
+            <button id="saveWeekButton">
+                Save & Sync Week
+            </button>
+
+
+            <div id="commissionerMessage"></div>
+
+        </div>
+
+
+        <!-- MY PICK -->
+
+        <div id="pickStatus">
+
+            <div id="pickStatusTitle">
+                Your Pick
+            </div>
+
+            <div id="pickStatusTeam">
+                No pick submitted
+            </div>
+
+            <div id="pickStatusNote">
+                Select an available team below.
+            </div>
+
+        </div>
+
+
+        <div id="pickMessage"></div>
+
+
+        <!-- STANDINGS -->
+
+        <h3 class="section-title">
+            Standings
+        </h3>
+
+        <div id="standings">
+            Loading standings...
+        </div>
+
+
+        <!-- FAMILY PICKS -->
+
+        <h3 class="section-title">
+            Family Picks
+        </h3>
+
+        <div id="familyPicks">
+            Loading picks...
+        </div>
+
+
+        <!-- GAMES -->
+
+        <h3 class="section-title">
+            Choose Your Team
+        </h3>
+
+        <div id="loading">
+            Loading games...
+        </div>
+
+        <div id="games"></div>
+
+
+        <button id="logoutButton">
+            Sign Out
+        </button>
+
+    </div>
+
+
+    <script type="module">
+
+        import {
+            createClient
+        } from
+        'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+
+        const supabaseUrl =
+            'https://nvtsrpfzedzzoeyvobcb.supabase.co';
+
+        const supabaseKey =
+            'sb_publishable_7xYfbXDNCZSUqFTipF9A-Q_MHeVqTnz';
+
+        const supabase =
+            createClient(
+                supabaseUrl,
+                supabaseKey
+            );
+
+
+        let currentUser = null;
+        let currentProfile = null;
+
+        let currentSeason = null;
+        let currentWeek = null;
+        let maxStrikes = 3;
+
+        let currentPick = null;
+        let currentGames = [];
+        let profiles = [];
+        let visiblePicks = [];
+        let seasonPicks = [];
+        let lossPicks = [];
+
+        let usedTeamIds =
+            new Set();
+
+        let teamMap =
+            new Map();
+
+
+        const loginDiv =
+            document.getElementById('login');
+
+        const appDiv =
+            document.getElementById('app');
+
+        const message =
+            document.getElementById('message');
+
+        const welcome =
+            document.getElementById('welcome');
+
+        const poolName =
+            document.getElementById('poolName');
+
+        const weekInfo =
+            document.getElementById('weekInfo');
+
+        const gamesDiv =
+            document.getElementById('games');
+
+        const loadingDiv =
+            document.getElementById('loading');
+
+        const pickStatusTeam =
+            document.getElementById('pickStatusTeam');
+
+        const pickStatusNote =
+            document.getElementById('pickStatusNote');
+
+        const pickMessage =
+            document.getElementById('pickMessage');
+
+        const familyPicksDiv =
+            document.getElementById('familyPicks');
+
+        const standingsDiv =
+            document.getElementById('standings');
+
+        const commissionerPanel =
+            document.getElementById('commissionerPanel');
+
+        const commissionerMessage =
+            document.getElementById('commissionerMessage');
+
+        const adminSeason =
+            document.getElementById('adminSeason');
+
+        const adminWeek =
+            document.getElementById('adminWeek');
+
+
+        // --------------------------------------------------
+        // LOGIN USER
+        // --------------------------------------------------
+
+        async function showLoggedInUser(user) {
+
+            currentUser =
+                user;
+
+
+            const {
+                data: profile,
+                error: profileError
+            } = await supabase
+                .from('profiles')
+                .select(
+                    'display_name, is_commissioner'
+                )
+                .eq(
+                    'id',
+                    user.id
+                )
+                .single();
+
+
+            if (profileError) {
+
+                message.textContent =
+                    'Profile error: ' +
+                    profileError.message;
+
+                return;
+            }
+
+
+            currentProfile =
+                profile;
+
+
+            loginDiv.style.display =
+                'none';
+
+            appDiv.style.display =
+                'block';
+
+
+            welcome.textContent =
+                'Welcome, ' +
+                profile.display_name;
+
+
+            if (
+                profile.is_commissioner
+            ) {
+
+                commissionerPanel.style.display =
+                    'block';
+
+            } else {
+
+                commissionerPanel.style.display =
+                    'none';
+            }
+
+
+            await loadCurrentWeek();
+        }
+
+
+        // --------------------------------------------------
+        // LOAD CURRENT WEEK
+        // --------------------------------------------------
+
+        async function loadCurrentWeek() {
+
+            loadingDiv.style.display =
+                'block';
+
+            loadingDiv.textContent =
+                'Loading games...';
+
+            gamesDiv.innerHTML =
+                '';
+
+            pickMessage.textContent =
+                '';
+
+
+            const {
+                data: settings,
+                error: settingsError
+            } = await supabase
+                .from('pool_settings')
+                .select(
+                    'pool_name, current_season, current_week, max_strikes'
+                )
+                .eq(
+                    'id',
+                    1
+                )
+                .single();
+
+
+            if (settingsError) {
+
+                loadingDiv.textContent =
+                    'Error loading pool settings: ' +
+                    settingsError.message;
+
+                return;
+            }
+
+
+            poolName.textContent =
+                settings.pool_name;
+
+
+            currentSeason =
+                settings.current_season;
+
+            currentWeek =
+                settings.current_week;
+
+            maxStrikes =
+                settings.max_strikes;
+
+
+            weekInfo.textContent =
+                currentSeason +
+                ' Season - Week ' +
+                currentWeek;
+
+
+            adminSeason.value =
+                currentSeason;
+
+            adminWeek.value =
+                currentWeek;
+
+
+            await loadTeams();
+            await loadGames();
+            await loadProfiles();
+            await loadMySeasonPicks();
+            await loadMyPick();
+            await loadVisiblePicks();
+            await loadLossPicks();
+
+            renderMyPick();
+            renderStandings();
+            renderFamilyPicks();
+            renderGames();
+        }
+
+
+        // --------------------------------------------------
+        // LOAD TEAMS
+        // --------------------------------------------------
+
+        async function loadTeams() {
+
+            const {
+                data,
+                error
+            } = await supabase
+                .from('teams')
+                .select(
+                    'id, abbreviation, full_name'
+                );
+
+
+            if (error) {
+
+                throw new Error(
+                    'Error loading teams: ' +
+                    error.message
+                );
+            }
+
+
+            teamMap =
+                new Map();
+
+
+            data.forEach(
+                team => {
+
+                    teamMap.set(
+                        team.id,
+                        team
+                    );
+                }
+            );
+        }
+
+
+        // --------------------------------------------------
+        // LOAD GAMES
+        // --------------------------------------------------
+
+        async function loadGames() {
+
+            const {
+                data,
+                error
+            } = await supabase
+                .from('games')
+                .select(`
+                    id,
+                    away_team_id,
+                    home_team_id,
+                    kickoff_at,
+                    status
+                `)
+                .eq(
+                    'season',
+                    currentSeason
+                )
+                .eq(
+                    'week',
+                    currentWeek
+                )
+                .order(
+                    'kickoff_at'
+                );
+
+
+            if (error) {
+
+                loadingDiv.textContent =
+                    'Error loading games: ' +
+                    error.message;
+
+                return;
+            }
+
+
+            currentGames =
+                data || [];
+
+
+            loadingDiv.style.display =
+                'none';
+        }
+
+
+        // --------------------------------------------------
+        // LOAD PLAYERS
+        // --------------------------------------------------
+
+        async function loadProfiles() {
+
+            const {
+                data,
+                error
+            } = await supabase
+                .from('profiles')
+                .select(
+                    'id, display_name'
+                )
+                .order(
+                    'display_name'
+                );
+
+
+            if (error) {
+
+                familyPicksDiv.textContent =
+                    'Error loading players: ' +
+                    error.message;
+
+                return;
+            }
+
+
+            profiles =
+                data || [];
+        }
+
+
+        // --------------------------------------------------
+        // MY SEASON PICKS
+        // --------------------------------------------------
+
+        async function loadMySeasonPicks() {
+
+            const {
+                data,
+                error
+            } = await supabase
+                .from('picks')
+                .select(
+                    'id, week, team_id'
+                )
+                .eq(
+                    'player_id',
+                    currentUser.id
+                )
+                .eq(
+                    'season',
+                    currentSeason
+                );
+
+
+            if (error) {
+
+                pickMessage.textContent =
+                    'Error loading used teams: ' +
+                    error.message;
+
+                return;
+            }
+
+
+            seasonPicks =
+                data || [];
+
+
+            usedTeamIds =
+                new Set(
+                    seasonPicks
+                        .filter(
+                            pick =>
+                                pick.week !==
+                                currentWeek
+                        )
+                        .map(
+                            pick =>
+                                pick.team_id
+                        )
+                );
+        }
+
+
+        // --------------------------------------------------
+        // MY CURRENT PICK
+        // --------------------------------------------------
+
+        async function loadMyPick() {
+
+            const {
+                data,
+                error
+            } = await supabase
+                .from('picks')
+                .select(`
+                    id,
+                    player_id,
+                    game_id,
+                    season,
+                    week,
+                    team_id,
+                    submitted_at,
+                    updated_at,
+                    result
+                `)
+                .eq(
+                    'player_id',
+                    currentUser.id
+                )
+                .eq(
+                    'season',
+                    currentSeason
+                )
+                .eq(
+                    'week',
+                    currentWeek
+                )
+                .maybeSingle();
+
+
+            if (error) {
+
+                pickMessage.textContent =
+                    'Error loading your pick: ' +
+                    error.message;
+
+                return;
+            }
+
+
+            currentPick =
+                data;
+        }
+
+
+        // --------------------------------------------------
+        // VISIBLE PICKS
+        // --------------------------------------------------
+
+        async function loadVisiblePicks() {
+
+            const {
+                data,
+                error
+            } = await supabase
+                .from('picks')
+                .select(`
+                    id,
+                    player_id,
+                    game_id,
+                    team_id
+                `)
+                .eq(
+                    'season',
+                    currentSeason
+                )
+                .eq(
+                    'week',
+                    currentWeek
+                );
+
+
+            if (error) {
+
+                familyPicksDiv.textContent =
+                    'Error loading picks: ' +
+                    error.message;
+
+                return;
+            }
+
+
+            visiblePicks =
+                data || [];
+        }
+
+
+        // --------------------------------------------------
+        // LOSSES / STANDINGS
+        // --------------------------------------------------
+
+        async function loadLossPicks() {
+
+            const {
+                data,
+                error
+            } = await supabase
+                .from('picks')
+                .select(
+                    'player_id, result'
+                )
+                .eq(
+                    'season',
+                    currentSeason
+                )
+                .eq(
+                    'result',
+                    'loss'
+                );
+
+
+            if (error) {
+
+                standingsDiv.textContent =
+                    'Error loading standings: ' +
+                    error.message;
+
+                return;
+            }
+
+
+            lossPicks =
+                data || [];
+        }
+
+
+        // --------------------------------------------------
+        // RENDER STANDINGS
+        // --------------------------------------------------
+
+        function renderStandings() {
+
+            if (
+                !profiles ||
+                profiles.length === 0
+            ) {
+
+                standingsDiv.innerHTML =
+                    '<div class="standing-row">No players found.</div>';
+
+                return;
+            }
+
+
+            const standings =
+                profiles
+                    .map(
+                        profile => {
+
+                            const strikes =
+                                lossPicks.filter(
+                                    pick =>
+                                        pick.player_id ===
+                                        profile.id
+                                ).length;
+
+
+                            return {
+                                ...profile,
+                                strikes:
+                                    strikes
+                            };
+                        }
+                    )
+                    .sort(
+                        (a, b) => {
+
+                            if (
+                                a.strikes !==
+                                b.strikes
+                            ) {
+
+                                return (
+                                    a.strikes -
+                                    b.strikes
+                                );
+                            }
+
+
+                            return a.display_name
+                                .localeCompare(
+                                    b.display_name
+                                );
+                        }
+                    );
+
+
+            standingsDiv.innerHTML =
+                standings
+                    .map(
+                        player => {
+
+                            const isEliminated =
+                                player.strikes >=
+                                maxStrikes;
+
+
+                            const strikeWord =
+                                player.strikes === 1
+                                    ? 'strike'
+                                    : 'strikes';
+
+
+                            return `
+                                <div class="standing-row">
+
+                                    <div class="standing-name">
+                                        ${player.display_name}
+                                    </div>
+
+                                    <div class="standing-info">
+
+                                        <div class="strike-count">
+                                            ${player.strikes}
+                                            ${strikeWord}
+                                        </div>
+
+                                        <div class="${
+                                            isEliminated
+                                                ? 'eliminated'
+                                                : 'alive'
+                                        }">
+
+                                            ${
+                                                isEliminated
+                                                    ? 'Eliminated'
+                                                    : 'Still Alive'
+                                            }
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            `;
+                        }
+                    )
+                    .join('');
+        }
+
+
+        // --------------------------------------------------
+        // RENDER MY PICK
+        // --------------------------------------------------
+
+        function renderMyPick() {
+
+            if (!currentPick) {
+
+                pickStatusTeam.textContent =
+                    'No pick submitted';
+
+                pickStatusNote.textContent =
+                    'Select an available team below.';
+
+                return;
+            }
+
+
+            const team =
+                teamMap.get(
+                    currentPick.team_id
+                );
+
+
+            const game =
+                currentGames.find(
+                    game =>
+                        game.id ===
+                        currentPick.game_id
+                );
+
+
+            pickStatusTeam.textContent =
+                team
+                    ? team.full_name
+                    : 'Unknown team';
+
+
+            if (!game) {
+
+                pickStatusNote.textContent =
+                    'Pick submitted.';
+
+                return;
+            }
+
+
+            const kickoff =
+                new Date(
+                    game.kickoff_at
+                );
+
+
+            if (
+                kickoff <=
+                new Date()
+            ) {
+
+                pickStatusNote.textContent =
+                    'Locked. This game has started.';
+
+            } else {
+
+                pickStatusNote.textContent =
+                    'You may change this pick until kickoff.';
+            }
+        }
+
+
+        // --------------------------------------------------
+        // RENDER FAMILY PICKS
+        // --------------------------------------------------
+
+        function renderFamilyPicks() {
+
+            if (
+                !profiles ||
+                profiles.length === 0
+            ) {
+
+                familyPicksDiv.innerHTML =
+                    '<div class="family-row">No players found.</div>';
+
+                return;
+            }
+
+
+            familyPicksDiv.innerHTML =
+                profiles
+                    .map(
+                        profile => {
+
+                            const pick =
+                                visiblePicks.find(
+                                    visiblePick =>
+                                        visiblePick.player_id ===
+                                        profile.id
+                                );
+
+
+                            let pickText =
+                                'Hidden / Not Revealed';
+
+                            let pickClass =
+                                'player-pick hidden-pick';
+
+
+                            if (pick) {
+
+                                const team =
+                                    teamMap.get(
+                                        pick.team_id
+                                    );
+
+
+                                if (team) {
+
+                                    pickText =
+                                        team.full_name;
+
+                                    pickClass =
+                                        'player-pick';
+                                }
+                            }
+
+
+                            const isMe =
+                                profile.id ===
+                                currentUser.id;
+
+
+                            return `
+                                <div class="family-row">
+
+                                    <div class="player-name">
+
+                                        ${profile.display_name}
+
+                                        ${
+                                            isMe
+                                                ? '<span class="my-pick-label">YOU</span>'
+                                                : ''
+                                        }
+
+                                    </div>
+
+                                    <div class="${pickClass}">
+                                        ${pickText}
+                                    </div>
+
+                                </div>
+                            `;
+                        }
+                    )
+                    .join('');
+        }
+
+
+        // --------------------------------------------------
+        // RENDER GAMES
+        // --------------------------------------------------
+
+        function renderGames() {
+
+            const now =
+                new Date();
+
+
+            if (
+                !currentGames ||
+                currentGames.length === 0
+            ) {
+
+                gamesDiv.innerHTML =
+                    '<p>No games found for this week yet.</p>';
+
+                return;
+            }
+
+
+            gamesDiv.innerHTML =
+                currentGames
+                    .map(
+                        game => {
+
+                            const awayTeam =
+                                teamMap.get(
+                                    game.away_team_id
+                                );
+
+                            const homeTeam =
+                                teamMap.get(
+                                    game.home_team_id
+                                );
+
+
+                            const kickoff =
+                                new Date(
+                                    game.kickoff_at
+                                );
+
+
+                            const hasStarted =
+                                kickoff <= now;
+
+
+                            const formattedKickoff =
+                                kickoff.toLocaleString(
+                                    [],
+                                    {
+                                        weekday: 'short',
+                                        month: 'short',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: '2-digit'
+                                    }
+                                );
+
+
+                            const statusText =
+                                hasStarted
+                                    ? 'Locked'
+                                    : 'Available';
+
+
+                            const statusClass =
+                                hasStarted
+                                    ? 'locked'
+                                    : 'available';
+
+
+                            const awaySelected =
+                                currentPick &&
+                                currentPick.team_id ===
+                                awayTeam.id;
+
+
+                            const homeSelected =
+                                currentPick &&
+                                currentPick.team_id ===
+                                homeTeam.id;
+
+
+                            const awayUsed =
+                                usedTeamIds.has(
+                                    awayTeam.id
+                                );
+
+
+                            const homeUsed =
+                                usedTeamIds.has(
+                                    homeTeam.id
+                                );
+
+
+                            const awayDisabled =
+                                hasStarted ||
+                                awayUsed;
+
+
+                            const homeDisabled =
+                                hasStarted ||
+                                homeUsed;
+
+
+                            return `
+                                <div class="game-card">
+
+                                    <div class="game-header">
+
+                                        <div class="kickoff">
+                                            ${formattedKickoff}
+                                        </div>
+
+                                        <div
+                                            class="status ${statusClass}"
+                                        >
+                                            ${statusText}
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="teams">
+
+                                        <button
+                                            class="
+                                                team-button
+                                                ${awaySelected ? 'selected' : ''}
+                                                ${awayUsed ? 'used' : ''}
+                                            "
+                                            data-game-id="${game.id}"
+                                            data-team-id="${awayTeam.id}"
+                                            ${awayDisabled ? 'disabled' : ''}
+                                        >
+                                            ${awayTeam.full_name}
+
+                                            ${
+                                                awayUsed
+                                                    ? '<span class="used-label">USED</span>'
+                                                    : ''
+                                            }
+                                        </button>
+
+
+                                        <button
+                                            class="
+                                                team-button
+                                                ${homeSelected ? 'selected' : ''}
+                                                ${homeUsed ? 'used' : ''}
+                                            "
+                                            data-game-id="${game.id}"
+                                            data-team-id="${homeTeam.id}"
+                                            ${homeDisabled ? 'disabled' : ''}
+                                        >
+                                            ${homeTeam.full_name}
+
+                                            ${
+                                                homeUsed
+                                                    ? '<span class="used-label">USED</span>'
+                                                    : ''
+                                            }
+                                        </button>
+
+                                    </div>
+
+                                </div>
+                            `;
+                        }
+                    )
+                    .join('');
+
+
+            document
+                .querySelectorAll(
+                    '.team-button:not(:disabled)'
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            'click',
+                            async () => {
+
+                                const gameId =
+                                    Number(
+                                        button.dataset.gameId
+                                    );
+
+                                const teamId =
+                                    Number(
+                                        button.dataset.teamId
+                                    );
+
+
+                                await chooseTeam(
+                                    gameId,
+                                    teamId
+                                );
+                            }
+                        );
+                    }
+                );
+        }
+
+
+        // --------------------------------------------------
+        // PICK TEAM
+        // --------------------------------------------------
+
+        async function chooseTeam(
+            gameId,
+            teamId
+        ) {
+
+            const team =
+                teamMap.get(
+                    teamId
+                );
+
+
+            if (!team) {
+                return;
+            }
+
+
+            if (
+                currentPick &&
+                currentPick.team_id ===
+                teamId
+            ) {
+
+                pickMessage.textContent =
+                    'That is already your current pick.';
+
+                return;
+            }
+
+
+            if (
+                usedTeamIds.has(
+                    teamId
+                )
+            ) {
+
+                pickMessage.textContent =
+                    'You already used this team earlier in the season.';
+
+                return;
+            }
+
+
+            let confirmationMessage =
+                'Submit ' +
+                team.full_name +
+                ' as your Week ' +
+                currentWeek +
+                ' pick?';
+
+
+            if (currentPick) {
+
+                const oldTeam =
+                    teamMap.get(
+                        currentPick.team_id
+                    );
+
+
+                confirmationMessage =
+                    'Change your pick from ' +
+                    oldTeam.full_name +
+                    ' to ' +
+                    team.full_name +
+                    '?';
+            }
+
+
+            const confirmed =
+                confirm(
+                    confirmationMessage
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            pickMessage.textContent =
+                'Saving pick...';
+
+
+            if (!currentPick) {
+
+                await insertPick(
+                    gameId,
+                    teamId
+                );
+
+            } else {
+
+                await updatePick(
+                    gameId,
+                    teamId
+                );
+            }
+        }
+
+
+        // --------------------------------------------------
+        // INSERT PICK
+        // --------------------------------------------------
+
+        async function insertPick(
+            gameId,
+            teamId
+        ) {
+
+            const {
+                error
+            } = await supabase
+                .from('picks')
+                .insert({
+                    player_id:
+                        currentUser.id,
+
+                    game_id:
+                        gameId,
+
+                    season:
+                        currentSeason,
+
+                    week:
+                        currentWeek,
+
+                    team_id:
+                        teamId
+                });
+
+
+            if (error) {
+
+                pickMessage.textContent =
+                    'Could not submit pick: ' +
+                    error.message;
+
+                return;
+            }
+
+
+            pickMessage.textContent =
+                'Pick submitted successfully.';
+
+
+            await refreshEverything();
+        }
+
+
+        // --------------------------------------------------
+        // UPDATE PICK
+        // --------------------------------------------------
+
+        async function updatePick(
+            gameId,
+            teamId
+        ) {
+
+            const {
+                error,
+                count
+            } = await supabase
+                .from('picks')
+                .update(
+                    {
+                        game_id:
+                            gameId,
+
+                        team_id:
+                            teamId
+                    },
+                    {
+                        count:
+                            'exact'
+                    }
+                )
+                .eq(
+                    'id',
+                    currentPick.id
+                );
+
+
+            if (error) {
+
+                pickMessage.textContent =
+                    'Could not change pick: ' +
+                    error.message;
+
+                return;
+            }
+
+
+            if (count === 0) {
+
+                pickMessage.textContent =
+                    'The pick could not be changed. The game may have already started.';
+
+                return;
+            }
+
+
+            pickMessage.textContent =
+                'Pick changed successfully.';
+
+
+            await refreshEverything();
+        }
+
+
+        // --------------------------------------------------
+        // REFRESH DATA
+        // --------------------------------------------------
+
+        async function refreshEverything() {
+
+            await loadMySeasonPicks();
+            await loadMyPick();
+            await loadVisiblePicks();
+            await loadLossPicks();
+
+            renderMyPick();
+            renderStandings();
+            renderFamilyPicks();
+            renderGames();
+        }
+
+
+        // --------------------------------------------------
+        // COMMISSIONER WEEK CONTROLS
+        // --------------------------------------------------
+
+        document
+            .getElementById(
+                'previousWeekButton'
+            )
+            .addEventListener(
+                'click',
+                () => {
+
+                    const week =
+                        Number(
+                            adminWeek.value
+                        );
+
+
+                    if (week > 1) {
+
+                        adminWeek.value =
+                            week - 1;
+                    }
+                }
+            );
+
+
+        document
+            .getElementById(
+                'nextWeekButton'
+            )
+            .addEventListener(
+                'click',
+                () => {
+
+                    const week =
+                        Number(
+                            adminWeek.value
+                        );
+
+
+                    if (week < 22) {
+
+                        adminWeek.value =
+                            week + 1;
+                    }
+                }
+            );
+
+
+        document
+            .getElementById(
+                'saveWeekButton'
+            )
+            .addEventListener(
+                'click',
+                async () => {
+
+                    if (
+                        !currentProfile ||
+                        !currentProfile.is_commissioner
+                    ) {
+
+                        return;
+                    }
+
+
+                    const season =
+                        Number(
+                            adminSeason.value
+                        );
+
+                    const week =
+                        Number(
+                            adminWeek.value
+                        );
+
+
+                    if (
+                        !Number.isInteger(season) ||
+                        season < 2020 ||
+                        season > 2100
+                    ) {
+
+                        commissionerMessage.textContent =
+                            'Enter a valid season.';
+
+                        return;
+                    }
+
+
+                    if (
+                        !Number.isInteger(week) ||
+                        week < 1 ||
+                        week > 22
+                    ) {
+
+                        commissionerMessage.textContent =
+                            'Week must be between 1 and 22.';
+
+                        return;
+                    }
+
+
+                    const confirmed =
+                        confirm(
+                            'Change the active pool to ' +
+                            season +
+                            ' Week ' +
+                            week +
+                            '?'
+                        );
+
+
+                    if (!confirmed) {
+                        return;
+                    }
+
+
+                    commissionerMessage.textContent =
+                        'Saving week...';
+
+
+                    const {
+                        error: updateError
+                    } = await supabase
+                        .from('pool_settings')
+                        .update({
+                            current_season:
+                                season,
+
+                            current_week:
+                                week,
+
+                            updated_at:
+                                new Date().toISOString()
+                        })
+                        .eq(
+                            'id',
+                            1
+                        );
+
+
+                    if (updateError) {
+
+                        commissionerMessage.textContent =
+                            'Could not change week: ' +
+                            updateError.message;
+
+                        return;
+                    }
+
+
+                    commissionerMessage.textContent =
+                        'Week changed. Syncing NFL schedule...';
+
+
+                    const {
+                        data: syncData,
+                        error: syncError
+                    } = await supabase.functions
+                        .invoke(
+                            'sync-nfl',
+                            {
+                                body: {}
+                            }
+                        );
+
+
+                    if (syncError) {
+
+                        commissionerMessage.textContent =
+                            'Week changed, but NFL sync failed. The automatic sync will retry within 15 minutes.';
+
+                    } else if (
+                        syncData &&
+                        syncData.success === false
+                    ) {
+
+                        commissionerMessage.textContent =
+                            'Week changed, but NFL sync returned an error: ' +
+                            syncData.error;
+
+                    } else {
+
+                        commissionerMessage.textContent =
+                            'Week changed and NFL schedule synced.';
+                    }
+
+
+                    await loadCurrentWeek();
+                }
+            );
+
+
+        // --------------------------------------------------
+        // LOGIN
+        // --------------------------------------------------
+
+        document
+            .getElementById(
+                'loginButton'
+            )
+            .addEventListener(
+                'click',
+                async () => {
+
+                    message.textContent =
+                        'Signing in...';
+
+
+                    const email =
+                        document
+                            .getElementById(
+                                'email'
+                            )
+                            .value
+                            .trim();
+
+
+                    const password =
+                        document
+                            .getElementById(
+                                'password'
+                            )
+                            .value;
+
+
+                    const {
+                        data,
+                        error
+                    } = await supabase.auth
+                        .signInWithPassword({
+                            email:
+                                email,
+
+                            password:
+                                password
+                        });
+
+
+                    if (error) {
+
+                        message.textContent =
+                            error.message;
+
+                        return;
+                    }
+
+
+                    message.textContent =
+                        '';
+
+
+                    await showLoggedInUser(
+                        data.user
+                    );
+                }
+            );
+
+
+        // --------------------------------------------------
+        // ENTER TO LOGIN
+        // --------------------------------------------------
+
+        document
+            .getElementById(
+                'password'
+            )
+            .addEventListener(
+                'keydown',
+                event => {
+
+                    if (
+                        event.key ===
+                        'Enter'
+                    ) {
+
+                        document
+                            .getElementById(
+                                'loginButton'
+                            )
+                            .click();
+                    }
+                }
+            );
+
+
+        // --------------------------------------------------
+        // LOGOUT
+        // --------------------------------------------------
+
+        document
+            .getElementById(
+                'logoutButton'
+            )
+            .addEventListener(
+                'click',
+                async () => {
+
+                    await supabase.auth
+                        .signOut();
+
+
+                    currentUser =
+                        null;
+
+                    currentProfile =
+                        null;
+
+                    currentPick =
+                        null;
+
+                    visiblePicks =
+                        [];
+
+                    seasonPicks =
+                        [];
+
+                    lossPicks =
+                        [];
+
+                    usedTeamIds =
+                        new Set();
+
+
+                    appDiv.style.display =
+                        'none';
+
+                    loginDiv.style.display =
+                        'block';
+
+                    commissionerPanel.style.display =
+                        'none';
+
+                    gamesDiv.innerHTML =
+                        '';
+
+                    familyPicksDiv.innerHTML =
+                        '';
+
+                    standingsDiv.innerHTML =
+                        '';
+
+                    welcome.textContent =
+                        '';
+
+                    weekInfo.textContent =
+                        '';
+
+                    pickMessage.textContent =
+                        '';
+
+                    commissionerMessage.textContent =
+                        '';
+
+                    message.textContent =
+                        'Signed out.';
+                }
+            );
+
+
+        // --------------------------------------------------
+        // EXISTING SESSION
+        // --------------------------------------------------
+
+        const {
+            data: {
+                session
+            }
+        } = await supabase.auth
+            .getSession();
+
+
+        if (session) {
+
+            await showLoggedInUser(
+                session.user
+            );
+        }
+
+    </script>
+
+</body>
+
+</html>
