@@ -1,0 +1,11 @@
+{
+  "name": "Family NFL Survivor",
+  "short_name": "NFL Survivor",
+  "description": "Private family NFL survivor pool",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f5f7",
+  "theme_color": "#2557a7",
+  "orientation": "portrait-primary"
+}
