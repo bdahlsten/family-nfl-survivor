@@ -11,13 +11,11 @@
 
     <title>Family NFL Survivor</title>
 
-    <!-- Installable web app settings -->
     <link
         rel="manifest"
         href="./manifest.json"
     >
 
-    <!-- iPhone / iPad Home Screen icon -->
     <link
         rel="apple-touch-icon"
         href="./apple-touch-icon.png"
@@ -96,23 +94,43 @@
             cursor: pointer;
         }
 
-        #login {
+        #login,
+        #resetPasswordScreen {
             max-width: 450px;
             margin: 60px auto;
             background: white;
             padding: 25px;
             border-radius: 10px;
+            box-shadow:
+                0 1px 4px
+                rgba(0, 0, 0, 0.12);
         }
 
-        #loginButton {
+        #loginButton,
+        #setNewPasswordButton {
             width: 100%;
             padding: 12px;
             margin-top: 10px;
         }
 
-        #message {
+        #forgotPasswordButton {
+            display: block;
+            width: 100%;
+            border: none;
+            background: none;
+            color: #2557a7;
+            text-decoration: underline;
+            padding: 12px 0 4px 0;
+        }
+
+        #message,
+        #resetPasswordMessage {
             margin-top: 15px;
             text-align: center;
+        }
+
+        #resetPasswordScreen {
+            display: none;
         }
 
         #app {
@@ -389,10 +407,42 @@
             text-decoration: none;
         }
 
+        #accountPanel {
+            background: white;
+            border-radius: 10px;
+            padding: 18px;
+            margin-top: 28px;
+            box-shadow:
+                0 1px 4px
+                rgba(0, 0, 0, 0.12);
+        }
+
+        #accountPanel h3 {
+            margin-top: 0;
+        }
+
+        #changePasswordButton {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+        }
+
+        #changePasswordMessage {
+            text-align: center;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        .password-help {
+            font-size: 13px;
+            color: #666;
+            margin: 3px 0 8px 0;
+        }
+
         #logoutButton {
             width: 100%;
             padding: 12px;
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
         #loading {
@@ -425,6 +475,8 @@
 
 <body>
 
+    <!-- LOGIN -->
+
     <div id="login">
 
         <h1>
@@ -449,10 +501,58 @@
             Sign In
         </button>
 
+        <button
+            id="forgotPasswordButton"
+            type="button"
+        >
+            Forgot password?
+        </button>
+
         <div id="message"></div>
 
     </div>
 
+
+    <!-- PASSWORD RESET -->
+
+    <div id="resetPasswordScreen">
+
+        <h1>
+            Set New Password
+        </h1>
+
+        <p>
+            Enter the new password you want to use for your survivor account.
+        </p>
+
+        <input
+            id="resetNewPassword"
+            type="password"
+            placeholder="New password"
+            autocomplete="new-password"
+        >
+
+        <input
+            id="resetConfirmPassword"
+            type="password"
+            placeholder="Confirm new password"
+            autocomplete="new-password"
+        >
+
+        <div class="password-help">
+            Password must be at least 8 characters.
+        </div>
+
+        <button id="setNewPasswordButton">
+            Set New Password
+        </button>
+
+        <div id="resetPasswordMessage"></div>
+
+    </div>
+
+
+    <!-- MAIN APP -->
 
     <div id="app">
 
@@ -464,6 +564,8 @@
 
         <div id="weekInfo"></div>
 
+
+        <!-- COMMISSIONER CONTROLS -->
 
         <div id="commissionerPanel">
 
@@ -530,6 +632,8 @@
         </div>
 
 
+        <!-- MY PICK -->
+
         <div id="pickStatus">
 
             <div id="pickStatusTitle">
@@ -550,6 +654,8 @@
         <div id="pickMessage"></div>
 
 
+        <!-- STANDINGS -->
+
         <h3 class="section-title">
             Standings
         </h3>
@@ -558,6 +664,8 @@
             Loading standings...
         </div>
 
+
+        <!-- FAMILY PICKS -->
 
         <h3 class="section-title">
             Family Picks
@@ -568,6 +676,8 @@
         </div>
 
 
+        <!-- GAMES -->
+
         <h3 class="section-title">
             Choose Your Team
         </h3>
@@ -577,6 +687,41 @@
         </div>
 
         <div id="games"></div>
+
+
+        <!-- ACCOUNT -->
+
+        <div id="accountPanel">
+
+            <h3>
+                Account
+            </h3>
+
+            <div class="password-help">
+                Change the password you use to sign in.
+            </div>
+
+            <input
+                id="accountNewPassword"
+                type="password"
+                placeholder="New password"
+                autocomplete="new-password"
+            >
+
+            <input
+                id="accountConfirmPassword"
+                type="password"
+                placeholder="Confirm new password"
+                autocomplete="new-password"
+            >
+
+            <button id="changePasswordButton">
+                Change Password
+            </button>
+
+            <div id="changePasswordMessage"></div>
+
+        </div>
 
 
         <button id="logoutButton">
@@ -594,6 +739,10 @@
         'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 
+        // --------------------------------------------------
+        // SUPABASE
+        // --------------------------------------------------
+
         const supabaseUrl =
             'https://nvtsrpfzedzzoeyvobcb.supabase.co';
 
@@ -607,6 +756,10 @@
             );
 
 
+        // --------------------------------------------------
+        // APP STATE
+        // --------------------------------------------------
+
         let currentUser = null;
         let currentProfile = null;
         let currentSeason = null;
@@ -619,6 +772,8 @@
         let seasonPicks = [];
         let lossPicks = [];
 
+        let recoveryMode = false;
+
         let usedTeamIds =
             new Set();
 
@@ -626,9 +781,18 @@
             new Map();
 
 
+        // --------------------------------------------------
+        // PAGE ELEMENTS
+        // --------------------------------------------------
+
         const loginDiv =
             document.getElementById(
                 'login'
+            );
+
+        const resetPasswordScreen =
+            document.getElementById(
+                'resetPasswordScreen'
             );
 
         const appDiv =
@@ -639,6 +803,11 @@
         const message =
             document.getElementById(
                 'message'
+            );
+
+        const resetPasswordMessage =
+            document.getElementById(
+                'resetPasswordMessage'
             );
 
         const welcome =
@@ -711,6 +880,51 @@
                 'adminWeek'
             );
 
+        const changePasswordMessage =
+            document.getElementById(
+                'changePasswordMessage'
+            );
+
+
+        // --------------------------------------------------
+        // SCREEN HELPERS
+        // --------------------------------------------------
+
+        function showLoginScreen() {
+
+            loginDiv.style.display =
+                'block';
+
+            resetPasswordScreen.style.display =
+                'none';
+
+            appDiv.style.display =
+                'none';
+        }
+
+
+        function showResetScreen() {
+
+            recoveryMode =
+                true;
+
+            loginDiv.style.display =
+                'none';
+
+            appDiv.style.display =
+                'none';
+
+            resetPasswordScreen.style.display =
+                'block';
+
+            resetPasswordMessage.textContent =
+                '';
+        }
+
+
+        // --------------------------------------------------
+        // LOGGED IN USER
+        // --------------------------------------------------
 
         async function showLoggedInUser(
             user
@@ -737,6 +951,8 @@
 
             if (profileError) {
 
+                showLoginScreen();
+
                 message.textContent =
                     'Profile error: ' +
                     profileError.message;
@@ -748,8 +964,14 @@
             currentProfile =
                 profile;
 
+            recoveryMode =
+                false;
+
 
             loginDiv.style.display =
+                'none';
+
+            resetPasswordScreen.style.display =
                 'none';
 
             appDiv.style.display =
@@ -778,6 +1000,10 @@
             await loadCurrentWeek();
         }
 
+
+        // --------------------------------------------------
+        // CURRENT WEEK
+        // --------------------------------------------------
 
         async function loadCurrentWeek() {
 
@@ -861,6 +1087,10 @@
         }
 
 
+        // --------------------------------------------------
+        // TEAMS
+        // --------------------------------------------------
+
         async function loadTeams() {
 
             const {
@@ -897,6 +1127,10 @@
             );
         }
 
+
+        // --------------------------------------------------
+        // GAMES
+        // --------------------------------------------------
 
         async function loadGames() {
 
@@ -944,6 +1178,10 @@
         }
 
 
+        // --------------------------------------------------
+        // PLAYERS
+        // --------------------------------------------------
+
         async function loadProfiles() {
 
             const {
@@ -973,6 +1211,10 @@
                 data || [];
         }
 
+
+        // --------------------------------------------------
+        // MY SEASON PICKS
+        // --------------------------------------------------
 
         async function loadMySeasonPicks() {
 
@@ -1024,6 +1266,10 @@
         }
 
 
+        // --------------------------------------------------
+        // MY CURRENT PICK
+        // --------------------------------------------------
+
         async function loadMyPick() {
 
             const {
@@ -1072,6 +1318,10 @@
         }
 
 
+        // --------------------------------------------------
+        // VISIBLE PICKS
+        // --------------------------------------------------
+
         async function loadVisiblePicks() {
 
             const {
@@ -1110,6 +1360,10 @@
         }
 
 
+        // --------------------------------------------------
+        // LOSSES
+        // --------------------------------------------------
+
         async function loadLossPicks() {
 
             const {
@@ -1144,6 +1398,10 @@
                 data || [];
         }
 
+
+        // --------------------------------------------------
+        // STANDINGS
+        // --------------------------------------------------
 
         function renderStandings() {
 
@@ -1255,6 +1513,10 @@
         }
 
 
+        // --------------------------------------------------
+        // MY PICK DISPLAY
+        // --------------------------------------------------
+
         function renderMyPick() {
 
             if (!currentPick) {
@@ -1319,6 +1581,10 @@
             }
         }
 
+
+        // --------------------------------------------------
+        // FAMILY PICKS
+        // --------------------------------------------------
 
         function renderFamilyPicks() {
 
@@ -1404,6 +1670,10 @@
                     .join('');
         }
 
+
+        // --------------------------------------------------
+        // GAME CARDS
+        // --------------------------------------------------
 
         function renderGames() {
 
@@ -1618,6 +1888,10 @@
         }
 
 
+        // --------------------------------------------------
+        // CHOOSE TEAM
+        // --------------------------------------------------
+
         async function chooseTeam(
             gameId,
             teamId
@@ -1717,6 +1991,10 @@
         }
 
 
+        // --------------------------------------------------
+        // INSERT PICK
+        // --------------------------------------------------
+
         async function insertPick(
             gameId,
             teamId
@@ -1761,6 +2039,10 @@
             await refreshEverything();
         }
 
+
+        // --------------------------------------------------
+        // UPDATE PICK
+        // --------------------------------------------------
 
         async function updatePick(
             gameId,
@@ -1818,6 +2100,10 @@
         }
 
 
+        // --------------------------------------------------
+        // REFRESH
+        // --------------------------------------------------
+
         async function refreshEverything() {
 
             await loadMySeasonPicks();
@@ -1832,6 +2118,10 @@
             renderGames();
         }
 
+
+        // --------------------------------------------------
+        // COMMISSIONER WEEK BUTTONS
+        // --------------------------------------------------
 
         document
             .getElementById(
@@ -1878,6 +2168,10 @@
                 }
             );
 
+
+        // --------------------------------------------------
+        // SAVE / SYNC WEEK
+        // --------------------------------------------------
 
         document
             .getElementById(
@@ -2031,6 +2325,10 @@
             );
 
 
+        // --------------------------------------------------
+        // SIGN IN
+        // --------------------------------------------------
+
         document
             .getElementById(
                 'loginButton'
@@ -2090,6 +2388,10 @@
             );
 
 
+        // --------------------------------------------------
+        // ENTER TO SIGN IN
+        // --------------------------------------------------
+
         document
             .getElementById(
                 'password'
@@ -2112,6 +2414,295 @@
                 }
             );
 
+
+        // --------------------------------------------------
+        // FORGOT PASSWORD
+        // --------------------------------------------------
+
+        document
+            .getElementById(
+                'forgotPasswordButton'
+            )
+            .addEventListener(
+                'click',
+                async () => {
+
+                    const email =
+                        document
+                            .getElementById(
+                                'email'
+                            )
+                            .value
+                            .trim();
+
+
+                    if (!email) {
+
+                        message.textContent =
+                            'Enter your email address first.';
+
+                        return;
+                    }
+
+
+                    message.textContent =
+                        'Sending password reset email...';
+
+
+                    const redirectTo =
+                        window.location.origin +
+                        window.location.pathname;
+
+
+                    const {
+                        error
+                    } = await supabase.auth
+                        .resetPasswordForEmail(
+                            email,
+                            {
+                                redirectTo
+                            }
+                        );
+
+
+                    if (error) {
+
+                        message.textContent =
+                            'Could not send reset email: ' +
+                            error.message;
+
+                        return;
+                    }
+
+
+                    message.textContent =
+                        'Password reset email sent. Check your inbox and spam folder.';
+                }
+            );
+
+
+        // --------------------------------------------------
+        // SET PASSWORD FROM RESET EMAIL
+        // --------------------------------------------------
+
+        document
+            .getElementById(
+                'setNewPasswordButton'
+            )
+            .addEventListener(
+                'click',
+                async () => {
+
+                    const newPassword =
+                        document
+                            .getElementById(
+                                'resetNewPassword'
+                            )
+                            .value;
+
+                    const confirmPassword =
+                        document
+                            .getElementById(
+                                'resetConfirmPassword'
+                            )
+                            .value;
+
+
+                    if (
+                        newPassword.length < 8
+                    ) {
+
+                        resetPasswordMessage.textContent =
+                            'Password must be at least 8 characters.';
+
+                        return;
+                    }
+
+
+                    if (
+                        newPassword !==
+                        confirmPassword
+                    ) {
+
+                        resetPasswordMessage.textContent =
+                            'Passwords do not match.';
+
+                        return;
+                    }
+
+
+                    resetPasswordMessage.textContent =
+                        'Updating password...';
+
+
+                    const {
+                        data,
+                        error
+                    } = await supabase.auth
+                        .updateUser({
+                            password:
+                                newPassword
+                        });
+
+
+                    if (error) {
+
+                        resetPasswordMessage.textContent =
+                            'Could not update password: ' +
+                            error.message;
+
+                        return;
+                    }
+
+
+                    resetPasswordMessage.textContent =
+                        'Password changed successfully.';
+
+
+                    document
+                        .getElementById(
+                            'resetNewPassword'
+                        )
+                        .value =
+                            '';
+
+                    document
+                        .getElementById(
+                            'resetConfirmPassword'
+                        )
+                        .value =
+                            '';
+
+
+                    recoveryMode =
+                        false;
+
+
+                    window.history
+                        .replaceState(
+                            {},
+                            document.title,
+                            window.location.pathname
+                        );
+
+
+                    if (
+                        data &&
+                        data.user
+                    ) {
+
+                        await showLoggedInUser(
+                            data.user
+                        );
+
+                    } else {
+
+                        showLoginScreen();
+
+                        message.textContent =
+                            'Password changed. Sign in with your new password.';
+                    }
+                }
+            );
+
+
+        // --------------------------------------------------
+        // CHANGE PASSWORD WHILE SIGNED IN
+        // --------------------------------------------------
+
+        document
+            .getElementById(
+                'changePasswordButton'
+            )
+            .addEventListener(
+                'click',
+                async () => {
+
+                    const newPassword =
+                        document
+                            .getElementById(
+                                'accountNewPassword'
+                            )
+                            .value;
+
+                    const confirmPassword =
+                        document
+                            .getElementById(
+                                'accountConfirmPassword'
+                            )
+                            .value;
+
+
+                    if (
+                        newPassword.length < 8
+                    ) {
+
+                        changePasswordMessage.textContent =
+                            'Password must be at least 8 characters.';
+
+                        return;
+                    }
+
+
+                    if (
+                        newPassword !==
+                        confirmPassword
+                    ) {
+
+                        changePasswordMessage.textContent =
+                            'Passwords do not match.';
+
+                        return;
+                    }
+
+
+                    changePasswordMessage.textContent =
+                        'Changing password...';
+
+
+                    const {
+                        error
+                    } = await supabase.auth
+                        .updateUser({
+                            password:
+                                newPassword
+                        });
+
+
+                    if (error) {
+
+                        changePasswordMessage.textContent =
+                            'Could not change password: ' +
+                            error.message;
+
+                        return;
+                    }
+
+
+                    document
+                        .getElementById(
+                            'accountNewPassword'
+                        )
+                        .value =
+                            '';
+
+                    document
+                        .getElementById(
+                            'accountConfirmPassword'
+                        )
+                        .value =
+                            '';
+
+
+                    changePasswordMessage.textContent =
+                        'Password changed successfully.';
+                }
+            );
+
+
+        // --------------------------------------------------
+        // SIGN OUT
+        // --------------------------------------------------
 
         document
             .getElementById(
@@ -2147,12 +2738,6 @@
                         new Set();
 
 
-                    appDiv.style.display =
-                        'none';
-
-                    loginDiv.style.display =
-                        'block';
-
                     commissionerPanel.style.display =
                         'none';
 
@@ -2177,27 +2762,117 @@
                     commissionerMessage.textContent =
                         '';
 
+                    changePasswordMessage.textContent =
+                        '';
+
                     message.textContent =
                         'Signed out.';
+
+
+                    showLoginScreen();
                 }
             );
 
 
-        const {
-            data: {
-                session
-            }
-        } = await supabase.auth
-            .getSession();
+        // --------------------------------------------------
+        // AUTH EVENTS
+        // --------------------------------------------------
 
-
-        if (session) {
-
-            await showLoggedInUser(
-                session.user
+        const currentUrl =
+            new URL(
+                window.location.href
             );
-        }
 
+        let waitingForAuthCallback =
+            currentUrl.searchParams.has(
+                'code'
+            ) ||
+            window.location.hash.includes(
+                'type=recovery'
+            );
+
+
+        supabase.auth
+            .onAuthStateChange(
+                (
+                    event,
+                    session
+                ) => {
+
+                    setTimeout(
+                        async () => {
+
+                            if (
+                                event ===
+                                'PASSWORD_RECOVERY'
+                            ) {
+
+                                waitingForAuthCallback =
+                                    false;
+
+                                currentUser =
+                                    session
+                                        ? session.user
+                                        : null;
+
+                                showResetScreen();
+
+                                return;
+                            }
+
+
+                            if (
+                                event ===
+                                'INITIAL_SESSION'
+                            ) {
+
+                                if (
+                                    waitingForAuthCallback
+                                ) {
+
+                                    return;
+                                }
+
+
+                                if (
+                                    session &&
+                                    session.user
+                                ) {
+
+                                    await showLoggedInUser(
+                                        session.user
+                                    );
+
+                                } else {
+
+                                    showLoginScreen();
+                                }
+                            }
+
+
+                            if (
+                                event ===
+                                'SIGNED_OUT'
+                            ) {
+
+                                if (
+                                    !recoveryMode
+                                ) {
+
+                                    showLoginScreen();
+                                }
+                            }
+
+                        },
+                        0
+                    );
+                }
+            );
+
+
+        // --------------------------------------------------
+        // SERVICE WORKER
+        // --------------------------------------------------
 
         if (
             'serviceWorker' in navigator
