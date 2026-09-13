@@ -17,6 +17,12 @@
         href="./manifest.json"
     >
 
+    <!-- iPhone / iPad Home Screen icon -->
+    <link
+        rel="apple-touch-icon"
+        href="./apple-touch-icon.png"
+    >
+
     <meta
         name="theme-color"
         content="#2557a7"
@@ -419,8 +425,6 @@
 
 <body>
 
-    <!-- LOGIN -->
-
     <div id="login">
 
         <h1>
@@ -450,8 +454,6 @@
     </div>
 
 
-    <!-- MAIN APP -->
-
     <div id="app">
 
         <h1 id="poolName">
@@ -462,8 +464,6 @@
 
         <div id="weekInfo"></div>
 
-
-        <!-- COMMISSIONER CONTROLS -->
 
         <div id="commissionerPanel">
 
@@ -530,8 +530,6 @@
         </div>
 
 
-        <!-- MY PICK -->
-
         <div id="pickStatus">
 
             <div id="pickStatusTitle">
@@ -552,8 +550,6 @@
         <div id="pickMessage"></div>
 
 
-        <!-- STANDINGS -->
-
         <h3 class="section-title">
             Standings
         </h3>
@@ -563,8 +559,6 @@
         </div>
 
 
-        <!-- FAMILY PICKS -->
-
         <h3 class="section-title">
             Family Picks
         </h3>
@@ -573,8 +567,6 @@
             Loading picks...
         </div>
 
-
-        <!-- GAMES -->
 
         <h3 class="section-title">
             Choose Your Team
@@ -602,10 +594,6 @@
         'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 
-        // --------------------------------------------------
-        // SUPABASE
-        // --------------------------------------------------
-
         const supabaseUrl =
             'https://nvtsrpfzedzzoeyvobcb.supabase.co';
 
@@ -619,30 +607,16 @@
             );
 
 
-        // --------------------------------------------------
-        // APP STATE
-        // --------------------------------------------------
-
         let currentUser = null;
-
         let currentProfile = null;
-
         let currentSeason = null;
-
         let currentWeek = null;
-
         let maxStrikes = 3;
-
         let currentPick = null;
-
         let currentGames = [];
-
         let profiles = [];
-
         let visiblePicks = [];
-
         let seasonPicks = [];
-
         let lossPicks = [];
 
         let usedTeamIds =
@@ -651,10 +625,6 @@
         let teamMap =
             new Map();
 
-
-        // --------------------------------------------------
-        // PAGE ELEMENTS
-        // --------------------------------------------------
 
         const loginDiv =
             document.getElementById(
@@ -742,10 +712,6 @@
             );
 
 
-        // --------------------------------------------------
-        // LOGIN USER
-        // --------------------------------------------------
-
         async function showLoggedInUser(
             user
         ) {
@@ -813,10 +779,6 @@
         }
 
 
-        // --------------------------------------------------
-        // CURRENT WEEK
-        // --------------------------------------------------
-
         async function loadCurrentWeek() {
 
             loadingDiv.style.display =
@@ -860,7 +822,6 @@
             poolName.textContent =
                 settings.pool_name;
 
-
             currentSeason =
                 settings.current_season;
 
@@ -885,33 +846,20 @@
 
 
             await loadTeams();
-
             await loadGames();
-
             await loadProfiles();
-
             await loadMySeasonPicks();
-
             await loadMyPick();
-
             await loadVisiblePicks();
-
             await loadLossPicks();
 
 
             renderMyPick();
-
             renderStandings();
-
             renderFamilyPicks();
-
             renderGames();
         }
 
-
-        // --------------------------------------------------
-        // TEAMS
-        // --------------------------------------------------
 
         async function loadTeams() {
 
@@ -949,10 +897,6 @@
             );
         }
 
-
-        // --------------------------------------------------
-        // GAMES
-        // --------------------------------------------------
 
         async function loadGames() {
 
@@ -1000,10 +944,6 @@
         }
 
 
-        // --------------------------------------------------
-        // PLAYERS
-        // --------------------------------------------------
-
         async function loadProfiles() {
 
             const {
@@ -1033,10 +973,6 @@
                 data || [];
         }
 
-
-        // --------------------------------------------------
-        // MY SEASON PICKS
-        // --------------------------------------------------
 
         async function loadMySeasonPicks() {
 
@@ -1088,10 +1024,6 @@
         }
 
 
-        // --------------------------------------------------
-        // MY CURRENT PICK
-        // --------------------------------------------------
-
         async function loadMyPick() {
 
             const {
@@ -1140,10 +1072,6 @@
         }
 
 
-        // --------------------------------------------------
-        // VISIBLE PICKS
-        // --------------------------------------------------
-
         async function loadVisiblePicks() {
 
             const {
@@ -1182,10 +1110,6 @@
         }
 
 
-        // --------------------------------------------------
-        // LOSSES
-        // --------------------------------------------------
-
         async function loadLossPicks() {
 
             const {
@@ -1220,10 +1144,6 @@
                 data || [];
         }
 
-
-        // --------------------------------------------------
-        // STANDINGS
-        // --------------------------------------------------
 
         function renderStandings() {
 
@@ -1335,10 +1255,6 @@
         }
 
 
-        // --------------------------------------------------
-        // MY PICK DISPLAY
-        // --------------------------------------------------
-
         function renderMyPick() {
 
             if (!currentPick) {
@@ -1403,10 +1319,6 @@
             }
         }
 
-
-        // --------------------------------------------------
-        // FAMILY PICKS
-        // --------------------------------------------------
 
         function renderFamilyPicks() {
 
@@ -1492,10 +1404,6 @@
                     .join('');
         }
 
-
-        // --------------------------------------------------
-        // GAME CARDS
-        // --------------------------------------------------
 
         function renderGames() {
 
@@ -1710,10 +1618,6 @@
         }
 
 
-        // --------------------------------------------------
-        // CHOOSE TEAM
-        // --------------------------------------------------
-
         async function chooseTeam(
             gameId,
             teamId
@@ -1813,10 +1717,6 @@
         }
 
 
-        // --------------------------------------------------
-        // INSERT PICK
-        // --------------------------------------------------
-
         async function insertPick(
             gameId,
             teamId
@@ -1861,10 +1761,6 @@
             await refreshEverything();
         }
 
-
-        // --------------------------------------------------
-        // UPDATE PICK
-        // --------------------------------------------------
 
         async function updatePick(
             gameId,
@@ -1922,34 +1818,20 @@
         }
 
 
-        // --------------------------------------------------
-        // REFRESH APP DATA
-        // --------------------------------------------------
-
         async function refreshEverything() {
 
             await loadMySeasonPicks();
-
             await loadMyPick();
-
             await loadVisiblePicks();
-
             await loadLossPicks();
 
 
             renderMyPick();
-
             renderStandings();
-
             renderFamilyPicks();
-
             renderGames();
         }
 
-
-        // --------------------------------------------------
-        // PREVIOUS WEEK
-        // --------------------------------------------------
 
         document
             .getElementById(
@@ -1974,10 +1856,6 @@
             );
 
 
-        // --------------------------------------------------
-        // NEXT WEEK
-        // --------------------------------------------------
-
         document
             .getElementById(
                 'nextWeekButton'
@@ -2000,10 +1878,6 @@
                 }
             );
 
-
-        // --------------------------------------------------
-        // SAVE / SYNC WEEK
-        // --------------------------------------------------
 
         document
             .getElementById(
@@ -2157,10 +2031,6 @@
             );
 
 
-        // --------------------------------------------------
-        // SIGN IN
-        // --------------------------------------------------
-
         document
             .getElementById(
                 'loginButton'
@@ -2220,10 +2090,6 @@
             );
 
 
-        // --------------------------------------------------
-        // ENTER TO SIGN IN
-        // --------------------------------------------------
-
         document
             .getElementById(
                 'password'
@@ -2246,10 +2112,6 @@
                 }
             );
 
-
-        // --------------------------------------------------
-        // SIGN OUT
-        // --------------------------------------------------
 
         document
             .getElementById(
@@ -2321,10 +2183,6 @@
             );
 
 
-        // --------------------------------------------------
-        // EXISTING LOGIN SESSION
-        // --------------------------------------------------
-
         const {
             data: {
                 session
@@ -2340,10 +2198,6 @@
             );
         }
 
-
-        // --------------------------------------------------
-        // SERVICE WORKER
-        // --------------------------------------------------
 
         if (
             'serviceWorker' in navigator
