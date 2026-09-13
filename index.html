@@ -6,12 +6,45 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     >
 
     <title>Family NFL Survivor</title>
 
+    <!-- Installable web app settings -->
+    <link
+        rel="manifest"
+        href="./manifest.json"
+    >
+
+    <meta
+        name="theme-color"
+        content="#2557a7"
+    >
+
+    <meta
+        name="mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="default"
+    >
+
+    <meta
+        name="apple-mobile-web-app-title"
+        content="NFL Survivor"
+    >
+
+
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -21,6 +54,16 @@
             max-width: 700px;
             margin: 0 auto;
             padding: 20px;
+            padding-top:
+                max(
+                    20px,
+                    env(safe-area-inset-top)
+                );
+            padding-bottom:
+                max(
+                    20px,
+                    env(safe-area-inset-bottom)
+                );
             background: #f4f5f7;
             color: #222;
         }
@@ -87,7 +130,9 @@
             padding: 18px;
             margin-bottom: 20px;
             text-align: center;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+            box-shadow:
+                0 1px 4px
+                rgba(0, 0, 0, 0.12);
         }
 
         #pickStatusTitle {
@@ -125,7 +170,9 @@
             background: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+            box-shadow:
+                0 1px 4px
+                rgba(0, 0, 0, 0.12);
             margin-bottom: 25px;
         }
 
@@ -203,7 +250,8 @@
 
         .admin-fields {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns:
+                1fr 1fr;
             gap: 12px;
         }
 
@@ -216,7 +264,8 @@
 
         .admin-week-buttons {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns:
+                1fr 1fr;
             gap: 10px;
             margin-top: 6px;
         }
@@ -249,7 +298,9 @@
             background: white;
             border-radius: 10px;
             padding: 16px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+            box-shadow:
+                0 1px 4px
+                rgba(0, 0, 0, 0.12);
         }
 
         .game-header {
@@ -284,7 +335,8 @@
 
         .teams {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns:
+                1fr 1fr;
             gap: 10px;
         }
 
@@ -344,9 +396,15 @@
 
         @media (max-width: 500px) {
 
+            body {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
             .teams,
             .admin-fields {
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    1fr;
             }
 
             .family-row,
@@ -354,26 +412,33 @@
                 align-items: flex-start;
             }
         }
+
     </style>
 </head>
 
 
 <body>
 
+    <!-- LOGIN -->
+
     <div id="login">
 
-        <h1>Family NFL Survivor</h1>
+        <h1>
+            Family NFL Survivor
+        </h1>
 
         <input
             id="email"
             type="email"
             placeholder="Email"
+            autocomplete="email"
         >
 
         <input
             id="password"
             type="password"
             placeholder="Password"
+            autocomplete="current-password"
         >
 
         <button id="loginButton">
@@ -384,6 +449,8 @@
 
     </div>
 
+
+    <!-- MAIN APP -->
 
     <div id="app">
 
@@ -454,7 +521,7 @@
 
 
             <button id="saveWeekButton">
-                Save & Sync Week
+                Save &amp; Sync Week
             </button>
 
 
@@ -535,6 +602,10 @@
         'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 
+        // --------------------------------------------------
+        // SUPABASE
+        // --------------------------------------------------
+
         const supabaseUrl =
             'https://nvtsrpfzedzzoeyvobcb.supabase.co';
 
@@ -548,18 +619,30 @@
             );
 
 
+        // --------------------------------------------------
+        // APP STATE
+        // --------------------------------------------------
+
         let currentUser = null;
+
         let currentProfile = null;
 
         let currentSeason = null;
+
         let currentWeek = null;
+
         let maxStrikes = 3;
 
         let currentPick = null;
+
         let currentGames = [];
+
         let profiles = [];
+
         let visiblePicks = [];
+
         let seasonPicks = [];
+
         let lossPicks = [];
 
         let usedTeamIds =
@@ -569,63 +652,103 @@
             new Map();
 
 
+        // --------------------------------------------------
+        // PAGE ELEMENTS
+        // --------------------------------------------------
+
         const loginDiv =
-            document.getElementById('login');
+            document.getElementById(
+                'login'
+            );
 
         const appDiv =
-            document.getElementById('app');
+            document.getElementById(
+                'app'
+            );
 
         const message =
-            document.getElementById('message');
+            document.getElementById(
+                'message'
+            );
 
         const welcome =
-            document.getElementById('welcome');
+            document.getElementById(
+                'welcome'
+            );
 
         const poolName =
-            document.getElementById('poolName');
+            document.getElementById(
+                'poolName'
+            );
 
         const weekInfo =
-            document.getElementById('weekInfo');
+            document.getElementById(
+                'weekInfo'
+            );
 
         const gamesDiv =
-            document.getElementById('games');
+            document.getElementById(
+                'games'
+            );
 
         const loadingDiv =
-            document.getElementById('loading');
+            document.getElementById(
+                'loading'
+            );
 
         const pickStatusTeam =
-            document.getElementById('pickStatusTeam');
+            document.getElementById(
+                'pickStatusTeam'
+            );
 
         const pickStatusNote =
-            document.getElementById('pickStatusNote');
+            document.getElementById(
+                'pickStatusNote'
+            );
 
         const pickMessage =
-            document.getElementById('pickMessage');
+            document.getElementById(
+                'pickMessage'
+            );
 
         const familyPicksDiv =
-            document.getElementById('familyPicks');
+            document.getElementById(
+                'familyPicks'
+            );
 
         const standingsDiv =
-            document.getElementById('standings');
+            document.getElementById(
+                'standings'
+            );
 
         const commissionerPanel =
-            document.getElementById('commissionerPanel');
+            document.getElementById(
+                'commissionerPanel'
+            );
 
         const commissionerMessage =
-            document.getElementById('commissionerMessage');
+            document.getElementById(
+                'commissionerMessage'
+            );
 
         const adminSeason =
-            document.getElementById('adminSeason');
+            document.getElementById(
+                'adminSeason'
+            );
 
         const adminWeek =
-            document.getElementById('adminWeek');
+            document.getElementById(
+                'adminWeek'
+            );
 
 
         // --------------------------------------------------
         // LOGIN USER
         // --------------------------------------------------
 
-        async function showLoggedInUser(user) {
+        async function showLoggedInUser(
+            user
+        ) {
 
             currentUser =
                 user;
@@ -691,7 +814,7 @@
 
 
         // --------------------------------------------------
-        // LOAD CURRENT WEEK
+        // CURRENT WEEK
         // --------------------------------------------------
 
         async function loadCurrentWeek() {
@@ -762,22 +885,32 @@
 
 
             await loadTeams();
+
             await loadGames();
+
             await loadProfiles();
+
             await loadMySeasonPicks();
+
             await loadMyPick();
+
             await loadVisiblePicks();
+
             await loadLossPicks();
 
+
             renderMyPick();
+
             renderStandings();
+
             renderFamilyPicks();
+
             renderGames();
         }
 
 
         // --------------------------------------------------
-        // LOAD TEAMS
+        // TEAMS
         // --------------------------------------------------
 
         async function loadTeams() {
@@ -818,7 +951,7 @@
 
 
         // --------------------------------------------------
-        // LOAD GAMES
+        // GAMES
         // --------------------------------------------------
 
         async function loadGames() {
@@ -868,7 +1001,7 @@
 
 
         // --------------------------------------------------
-        // LOAD PLAYERS
+        // PLAYERS
         // --------------------------------------------------
 
         async function loadProfiles() {
@@ -1050,7 +1183,7 @@
 
 
         // --------------------------------------------------
-        // LOSSES / STANDINGS
+        // LOSSES
         // --------------------------------------------------
 
         async function loadLossPicks() {
@@ -1089,7 +1222,7 @@
 
 
         // --------------------------------------------------
-        // RENDER STANDINGS
+        // STANDINGS
         // --------------------------------------------------
 
         function renderStandings() {
@@ -1121,8 +1254,7 @@
 
                             return {
                                 ...profile,
-                                strikes:
-                                    strikes
+                                strikes
                             };
                         }
                     )
@@ -1204,7 +1336,7 @@
 
 
         // --------------------------------------------------
-        // RENDER MY PICK
+        // MY PICK DISPLAY
         // --------------------------------------------------
 
         function renderMyPick() {
@@ -1273,7 +1405,7 @@
 
 
         // --------------------------------------------------
-        // RENDER FAMILY PICKS
+        // FAMILY PICKS
         // --------------------------------------------------
 
         function renderFamilyPicks() {
@@ -1362,7 +1494,7 @@
 
 
         // --------------------------------------------------
-        // RENDER GAMES
+        // GAME CARDS
         // --------------------------------------------------
 
         function renderGames() {
@@ -1413,11 +1545,20 @@
                                 kickoff.toLocaleString(
                                     [],
                                     {
-                                        weekday: 'short',
-                                        month: 'short',
-                                        day: 'numeric',
-                                        hour: 'numeric',
-                                        minute: '2-digit'
+                                        weekday:
+                                            'short',
+
+                                        month:
+                                            'short',
+
+                                        day:
+                                            'numeric',
+
+                                        hour:
+                                            'numeric',
+
+                                        minute:
+                                            '2-digit'
                                     }
                                 );
 
@@ -1570,7 +1711,7 @@
 
 
         // --------------------------------------------------
-        // PICK TEAM
+        // CHOOSE TEAM
         // --------------------------------------------------
 
         async function chooseTeam(
@@ -1782,25 +1923,32 @@
 
 
         // --------------------------------------------------
-        // REFRESH DATA
+        // REFRESH APP DATA
         // --------------------------------------------------
 
         async function refreshEverything() {
 
             await loadMySeasonPicks();
+
             await loadMyPick();
+
             await loadVisiblePicks();
+
             await loadLossPicks();
 
+
             renderMyPick();
+
             renderStandings();
+
             renderFamilyPicks();
+
             renderGames();
         }
 
 
         // --------------------------------------------------
-        // COMMISSIONER WEEK CONTROLS
+        // PREVIOUS WEEK
         // --------------------------------------------------
 
         document
@@ -1826,6 +1974,10 @@
             );
 
 
+        // --------------------------------------------------
+        // NEXT WEEK
+        // --------------------------------------------------
+
         document
             .getElementById(
                 'nextWeekButton'
@@ -1848,6 +2000,10 @@
                 }
             );
 
+
+        // --------------------------------------------------
+        // SAVE / SYNC WEEK
+        // --------------------------------------------------
 
         document
             .getElementById(
@@ -1878,7 +2034,9 @@
 
 
                     if (
-                        !Number.isInteger(season) ||
+                        !Number.isInteger(
+                            season
+                        ) ||
                         season < 2020 ||
                         season > 2100
                     ) {
@@ -1891,7 +2049,9 @@
 
 
                     if (
-                        !Number.isInteger(week) ||
+                        !Number.isInteger(
+                            week
+                        ) ||
                         week < 1 ||
                         week > 22
                     ) {
@@ -1925,7 +2085,9 @@
                     const {
                         error: updateError
                     } = await supabase
-                        .from('pool_settings')
+                        .from(
+                            'pool_settings'
+                        )
                         .update({
                             current_season:
                                 season,
@@ -1934,7 +2096,8 @@
                                 week,
 
                             updated_at:
-                                new Date().toISOString()
+                                new Date()
+                                    .toISOString()
                         })
                         .eq(
                             'id',
@@ -1995,7 +2158,7 @@
 
 
         // --------------------------------------------------
-        // LOGIN
+        // SIGN IN
         // --------------------------------------------------
 
         document
@@ -2032,11 +2195,8 @@
                         error
                     } = await supabase.auth
                         .signInWithPassword({
-                            email:
-                                email,
-
-                            password:
-                                password
+                            email,
+                            password
                         });
 
 
@@ -2061,7 +2221,7 @@
 
 
         // --------------------------------------------------
-        // ENTER TO LOGIN
+        // ENTER TO SIGN IN
         // --------------------------------------------------
 
         document
@@ -2088,7 +2248,7 @@
 
 
         // --------------------------------------------------
-        // LOGOUT
+        // SIGN OUT
         // --------------------------------------------------
 
         document
@@ -2162,7 +2322,7 @@
 
 
         // --------------------------------------------------
-        // EXISTING SESSION
+        // EXISTING LOGIN SESSION
         // --------------------------------------------------
 
         const {
@@ -2177,6 +2337,43 @@
 
             await showLoggedInUser(
                 session.user
+            );
+        }
+
+
+        // --------------------------------------------------
+        // SERVICE WORKER
+        // --------------------------------------------------
+
+        if (
+            'serviceWorker' in navigator
+        ) {
+
+            window.addEventListener(
+                'load',
+                async () => {
+
+                    try {
+
+                        await navigator
+                            .serviceWorker
+                            .register(
+                                './service-worker.js'
+                            );
+
+
+                        console.log(
+                            'Service worker registered.'
+                        );
+
+                    } catch (error) {
+
+                        console.error(
+                            'Service worker registration failed:',
+                            error
+                        );
+                    }
+                }
             );
         }
 
