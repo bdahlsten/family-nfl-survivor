@@ -1,2 +1,2 @@
 # family-nfl-survivor
-Family NLF Survivor
+Family NFL Survivor
