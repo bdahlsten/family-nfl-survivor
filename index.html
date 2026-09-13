@@ -55,7 +55,9 @@
             margin: 0 auto;
             padding: 20px;
             padding-top: max(20px, env(safe-area-inset-top));
-            padding-bottom: max(20px, env(safe-area-inset-bottom));
+            padding-bottom: calc(
+                105px + env(safe-area-inset-bottom)
+            );
             background: #f4f5f7;
             color: #222;
         }
@@ -89,7 +91,9 @@
             background: white;
             padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+            box-shadow:
+                0 1px 4px
+                rgba(0, 0, 0, 0.12);
         }
 
         #loginButton,
@@ -129,10 +133,27 @@
 
         #weekInfo {
             text-align: center;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: bold;
             margin-bottom: 20px;
+            color: #555;
         }
+
+        .app-section {
+            display: none;
+        }
+
+        .app-section.active {
+            display: block;
+        }
+
+        .section-title {
+            margin-top: 22px;
+            margin-bottom: 12px;
+        }
+
+
+        /* CURRENT PICK */
 
         #pickStatus {
             background: white;
@@ -140,7 +161,9 @@
             padding: 18px;
             margin-bottom: 20px;
             text-align: center;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+            box-shadow:
+                0 1px 4px
+                rgba(0, 0, 0, 0.12);
         }
 
         #pickStatusTitle {
@@ -168,17 +191,17 @@
             font-weight: bold;
         }
 
-        .section-title {
-            margin-top: 28px;
-            margin-bottom: 12px;
-        }
+
+        /* STRIKES / FAMILY PICKS */
 
         #standings,
         #familyPicks {
             background: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+            box-shadow:
+                0 1px 4px
+                rgba(0, 0, 0, 0.12);
             margin-bottom: 25px;
         }
 
@@ -241,6 +264,119 @@
             color: #2557a7;
         }
 
+
+        /* MY PICK HISTORY */
+
+        #myPickHistory {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow:
+                0 1px 4px
+                rgba(0, 0, 0, 0.12);
+        }
+
+        .history-row {
+            display: grid;
+            grid-template-columns: 75px 1fr auto;
+            gap: 12px;
+            align-items: center;
+            padding: 15px 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .history-row:last-child {
+            border-bottom: none;
+        }
+
+        .history-week {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .history-team {
+            font-weight: bold;
+        }
+
+        .history-team.win {
+            color: #176629;
+        }
+
+        .history-team.loss {
+            color: #a21d1d;
+        }
+
+        .history-team.tie {
+            color: #936500;
+        }
+
+        .history-team.pending,
+        .history-team.void,
+        .history-team.none {
+            color: #666;
+        }
+
+        .result-badge {
+            font-size: 12px;
+            font-weight: bold;
+            padding: 5px 8px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        .result-badge.win {
+            color: #176629;
+            background: #e5f7e8;
+        }
+
+        .result-badge.loss {
+            color: #a21d1d;
+            background: #fde8e8;
+        }
+
+        .result-badge.tie {
+            color: #765000;
+            background: #fff1c8;
+        }
+
+        .result-badge.pending {
+            color: #555;
+            background: #eeeeee;
+        }
+
+        .result-badge.void {
+            color: #555;
+            background: #eeeeee;
+        }
+
+        .result-badge.none {
+            color: #777;
+            background: #f3f3f3;
+        }
+
+        .screen-description {
+            color: #666;
+            font-size: 14px;
+            margin-top: -5px;
+            margin-bottom: 18px;
+        }
+
+
+        /* PLAYERS PLACEHOLDER */
+
+        .placeholder-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow:
+                0 1px 4px
+                rgba(0, 0, 0, 0.12);
+            color: #555;
+        }
+
+
+        /* COMMISSIONER */
+
         #commissionerPanel {
             display: none;
             background: #fff8dd;
@@ -292,6 +428,9 @@
             font-weight: bold;
         }
 
+
+        /* GAMES */
+
         #games {
             display: flex;
             flex-direction: column;
@@ -302,7 +441,9 @@
             background: white;
             border-radius: 10px;
             padding: 16px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+            box-shadow:
+                0 1px 4px
+                rgba(0, 0, 0, 0.12);
         }
 
         .game-header {
@@ -384,12 +525,21 @@
             text-decoration: none;
         }
 
+        #loading {
+            text-align: center;
+            padding: 20px;
+        }
+
+
+        /* ACCOUNT */
+
         #accountPanel {
             background: white;
             border-radius: 10px;
             padding: 18px;
-            margin-top: 28px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+            box-shadow:
+                0 1px 4px
+                rgba(0, 0, 0, 0.12);
         }
 
         #accountPanel h3 {
@@ -420,10 +570,43 @@
             margin-top: 20px;
         }
 
-        #loading {
-            text-align: center;
-            padding: 20px;
+
+        /* BOTTOM NAVIGATION */
+
+        #bottomNav {
+            position: fixed;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 700px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            background: white;
+            border-top: 1px solid #ddd;
+            box-shadow:
+                0 -2px 8px
+                rgba(0, 0, 0, 0.10);
+            padding-bottom:
+                env(safe-area-inset-bottom);
+            z-index: 1000;
         }
+
+        .nav-button {
+            min-width: 0;
+            border: none;
+            background: white;
+            padding: 13px 2px 11px 2px;
+            font-size: 12px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .nav-button.active {
+            color: #2557a7;
+            background: #f1f5ff;
+        }
+
 
         @media (max-width: 500px) {
 
@@ -441,6 +624,13 @@
             .standing-row {
                 align-items: flex-start;
             }
+
+            .history-row {
+                grid-template-columns: 65px 1fr auto;
+                padding-left: 12px;
+                padding-right: 12px;
+                gap: 8px;
+            }
         }
 
     </style>
@@ -449,9 +639,13 @@
 
 <body>
 
+    <!-- LOGIN -->
+
     <div id="login">
 
-        <h1>Family NFL Survivor</h1>
+        <h1>
+            Family NFL Survivor
+        </h1>
 
         <input
             id="email"
@@ -483,9 +677,13 @@
     </div>
 
 
+    <!-- PASSWORD RESET -->
+
     <div id="resetPasswordScreen">
 
-        <h1>Set New Password</h1>
+        <h1>
+            Set New Password
+        </h1>
 
         <p>
             Enter the new password you want to use for your survivor account.
@@ -518,6 +716,8 @@
     </div>
 
 
+    <!-- APP -->
+
     <div id="app">
 
         <h1 id="poolName">
@@ -529,158 +729,275 @@
         <div id="weekInfo"></div>
 
 
-        <div id="commissionerPanel">
+        <!-- HOME -->
 
-            <h3>
-                Commissioner Controls
-            </h3>
-
-            <div class="admin-fields">
-
-                <div class="admin-field">
-
-                    <label for="adminSeason">
-                        Season
-                    </label>
-
-                    <input
-                        id="adminSeason"
-                        type="number"
-                        min="2020"
-                        max="2100"
-                    >
-
-                </div>
-
-
-                <div class="admin-field">
-
-                    <label for="adminWeek">
-                        Week
-                    </label>
-
-                    <input
-                        id="adminWeek"
-                        type="number"
-                        min="1"
-                        max="22"
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="admin-week-buttons">
-
-                <button id="previousWeekButton">
-                    Previous Week
-                </button>
-
-                <button id="nextWeekButton">
-                    Next Week
-                </button>
-
-            </div>
-
-
-            <button id="saveWeekButton">
-                Save &amp; Sync Week
-            </button>
-
-            <div id="commissionerMessage"></div>
-
-        </div>
-
-
-        <div id="pickStatus">
-
-            <div id="pickStatusTitle">
-                Your Pick
-            </div>
-
-            <div id="pickStatusTeam">
-                No pick submitted
-            </div>
-
-            <div id="pickStatusNote">
-                Select an available team below.
-            </div>
-
-        </div>
-
-
-        <div id="pickMessage"></div>
-
-
-        <h3 class="section-title">
-            Strike Count
-        </h3>
-
-        <div id="standings">
-            Loading strike counts...
-        </div>
-
-
-        <h3
-            class="section-title"
-            id="weekPicksHeading"
+        <section
+            id="homeSection"
+            class="app-section active"
+            data-section="home"
         >
-            Week Picks
-        </h3>
 
-        <div id="familyPicks">
-            Loading picks...
-        </div>
+            <div id="pickStatus">
 
+                <div id="pickStatusTitle">
+                    Your Pick
+                </div>
 
-        <h3 class="section-title">
-            Choose Your Team
-        </h3>
+                <div id="pickStatusTeam">
+                    No pick submitted
+                </div>
 
-        <div id="loading">
-            Loading games...
-        </div>
+                <div id="pickStatusNote">
+                    Select an available team below.
+                </div>
 
-        <div id="games"></div>
-
-
-        <div id="accountPanel">
-
-            <h3>
-                Account
-            </h3>
-
-            <div class="password-help">
-                Change the password you use to sign in.
             </div>
 
-            <input
-                id="accountNewPassword"
-                type="password"
-                placeholder="New password"
-                autocomplete="new-password"
-            >
 
-            <input
-                id="accountConfirmPassword"
-                type="password"
-                placeholder="Confirm new password"
-                autocomplete="new-password"
-            >
+            <div id="pickMessage"></div>
 
-            <button id="changePasswordButton">
-                Change Password
+
+            <h3 class="section-title">
+                Strike Count
+            </h3>
+
+            <div id="standings">
+                Loading strike counts...
+            </div>
+
+
+            <h3
+                class="section-title"
+                id="weekPicksHeading"
+            >
+                Week Picks
+            </h3>
+
+            <div id="familyPicks">
+                Loading picks...
+            </div>
+
+        </section>
+
+
+        <!-- MY PICKS -->
+
+        <section
+            id="myPicksSection"
+            class="app-section"
+            data-section="my-picks"
+        >
+
+            <h3 class="section-title">
+                My Picks
+            </h3>
+
+            <div
+                class="screen-description"
+                id="myPicksDescription"
+            >
+                Your season pick history.
+            </div>
+
+            <div id="myPickHistory">
+                Loading pick history...
+            </div>
+
+        </section>
+
+
+        <!-- PLAYERS -->
+
+        <section
+            id="playersSection"
+            class="app-section"
+            data-section="players"
+        >
+
+            <h3 class="section-title">
+                Players
+            </h3>
+
+            <div class="placeholder-card">
+                Player pick histories will be added here next.
+            </div>
+
+        </section>
+
+
+        <!-- MAKE PICK -->
+
+        <section
+            id="pickSection"
+            class="app-section"
+            data-section="pick"
+        >
+
+            <h3 class="section-title">
+                Choose Your Team
+            </h3>
+
+            <div id="loading">
+                Loading games...
+            </div>
+
+            <div id="games"></div>
+
+        </section>
+
+
+        <!-- ACCOUNT -->
+
+        <section
+            id="accountSection"
+            class="app-section"
+            data-section="account"
+        >
+
+            <div id="commissionerPanel">
+
+                <h3>
+                    Commissioner Controls
+                </h3>
+
+                <div class="admin-fields">
+
+                    <div class="admin-field">
+
+                        <label for="adminSeason">
+                            Season
+                        </label>
+
+                        <input
+                            id="adminSeason"
+                            type="number"
+                            min="2020"
+                            max="2100"
+                        >
+
+                    </div>
+
+
+                    <div class="admin-field">
+
+                        <label for="adminWeek">
+                            Week
+                        </label>
+
+                        <input
+                            id="adminWeek"
+                            type="number"
+                            min="1"
+                            max="22"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-week-buttons">
+
+                    <button id="previousWeekButton">
+                        Previous Week
+                    </button>
+
+                    <button id="nextWeekButton">
+                        Next Week
+                    </button>
+
+                </div>
+
+
+                <button id="saveWeekButton">
+                    Save &amp; Sync Week
+                </button>
+
+                <div id="commissionerMessage"></div>
+
+            </div>
+
+
+            <div id="accountPanel">
+
+                <h3>
+                    Account
+                </h3>
+
+                <div class="password-help">
+                    Change the password you use to sign in.
+                </div>
+
+                <input
+                    id="accountNewPassword"
+                    type="password"
+                    placeholder="New password"
+                    autocomplete="new-password"
+                >
+
+                <input
+                    id="accountConfirmPassword"
+                    type="password"
+                    placeholder="Confirm new password"
+                    autocomplete="new-password"
+                >
+
+                <button id="changePasswordButton">
+                    Change Password
+                </button>
+
+                <div id="changePasswordMessage"></div>
+
+            </div>
+
+
+            <button id="logoutButton">
+                Sign Out
             </button>
 
-            <div id="changePasswordMessage"></div>
-
-        </div>
+        </section>
 
 
-        <button id="logoutButton">
-            Sign Out
-        </button>
+        <!-- BOTTOM NAV -->
+
+        <nav id="bottomNav">
+
+            <button
+                class="nav-button active"
+                data-target="home"
+            >
+                Home
+            </button>
+
+            <button
+                class="nav-button"
+                data-target="my-picks"
+            >
+                My Picks
+            </button>
+
+            <button
+                class="nav-button"
+                data-target="players"
+            >
+                Players
+            </button>
+
+            <button
+                class="nav-button"
+                data-target="pick"
+            >
+                Pick
+            </button>
+
+            <button
+                class="nav-button"
+                data-target="account"
+            >
+                Account
+            </button>
+
+        </nav>
 
     </div>
 
@@ -727,68 +1044,193 @@
 
 
         const loginDiv =
-            document.getElementById('login');
+            document.getElementById(
+                'login'
+            );
 
         const resetPasswordScreen =
-            document.getElementById('resetPasswordScreen');
+            document.getElementById(
+                'resetPasswordScreen'
+            );
 
         const appDiv =
-            document.getElementById('app');
+            document.getElementById(
+                'app'
+            );
 
         const message =
-            document.getElementById('message');
+            document.getElementById(
+                'message'
+            );
 
         const resetPasswordMessage =
-            document.getElementById('resetPasswordMessage');
+            document.getElementById(
+                'resetPasswordMessage'
+            );
 
         const welcome =
-            document.getElementById('welcome');
+            document.getElementById(
+                'welcome'
+            );
 
         const poolName =
-            document.getElementById('poolName');
+            document.getElementById(
+                'poolName'
+            );
 
         const weekInfo =
-            document.getElementById('weekInfo');
+            document.getElementById(
+                'weekInfo'
+            );
 
         const weekPicksHeading =
-            document.getElementById('weekPicksHeading');
+            document.getElementById(
+                'weekPicksHeading'
+            );
+
+        const myPicksDescription =
+            document.getElementById(
+                'myPicksDescription'
+            );
+
+        const myPickHistory =
+            document.getElementById(
+                'myPickHistory'
+            );
 
         const gamesDiv =
-            document.getElementById('games');
+            document.getElementById(
+                'games'
+            );
 
         const loadingDiv =
-            document.getElementById('loading');
+            document.getElementById(
+                'loading'
+            );
 
         const pickStatusTeam =
-            document.getElementById('pickStatusTeam');
+            document.getElementById(
+                'pickStatusTeam'
+            );
 
         const pickStatusNote =
-            document.getElementById('pickStatusNote');
+            document.getElementById(
+                'pickStatusNote'
+            );
 
         const pickMessage =
-            document.getElementById('pickMessage');
+            document.getElementById(
+                'pickMessage'
+            );
 
         const familyPicksDiv =
-            document.getElementById('familyPicks');
+            document.getElementById(
+                'familyPicks'
+            );
 
         const standingsDiv =
-            document.getElementById('standings');
+            document.getElementById(
+                'standings'
+            );
 
         const commissionerPanel =
-            document.getElementById('commissionerPanel');
+            document.getElementById(
+                'commissionerPanel'
+            );
 
         const commissionerMessage =
-            document.getElementById('commissionerMessage');
+            document.getElementById(
+                'commissionerMessage'
+            );
 
         const adminSeason =
-            document.getElementById('adminSeason');
+            document.getElementById(
+                'adminSeason'
+            );
 
         const adminWeek =
-            document.getElementById('adminWeek');
+            document.getElementById(
+                'adminWeek'
+            );
 
         const changePasswordMessage =
-            document.getElementById('changePasswordMessage');
+            document.getElementById(
+                'changePasswordMessage'
+            );
 
+
+        // --------------------------------------------------
+        // NAVIGATION
+        // --------------------------------------------------
+
+        function showAppSection(
+            target
+        ) {
+
+            document
+                .querySelectorAll(
+                    '.app-section'
+                )
+                .forEach(
+                    section => {
+
+                        section.classList
+                            .toggle(
+                                'active',
+                                section.dataset.section ===
+                                target
+                            );
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    '.nav-button'
+                )
+                .forEach(
+                    button => {
+
+                        button.classList
+                            .toggle(
+                                'active',
+                                button.dataset.target ===
+                                target
+                            );
+                    }
+                );
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+
+        document
+            .querySelectorAll(
+                '.nav-button'
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        'click',
+                        () => {
+
+                            showAppSection(
+                                button.dataset.target
+                            );
+                        }
+                    );
+                }
+            );
+
+
+        // --------------------------------------------------
+        // SCREEN HELPERS
+        // --------------------------------------------------
 
         function showLoginScreen() {
 
@@ -822,7 +1264,13 @@
         }
 
 
-        async function showLoggedInUser(user) {
+        // --------------------------------------------------
+        // LOGGED IN USER
+        // --------------------------------------------------
+
+        async function showLoggedInUser(
+            user
+        ) {
 
             currentUser =
                 user;
@@ -877,7 +1325,9 @@
                 profile.display_name;
 
 
-            if (profile.is_commissioner) {
+            if (
+                profile.is_commissioner
+            ) {
 
                 commissionerPanel.style.display =
                     'block';
@@ -889,9 +1339,18 @@
             }
 
 
+            showAppSection(
+                'home'
+            );
+
+
             await loadCurrentWeek();
         }
 
+
+        // --------------------------------------------------
+        // LOAD WEEK
+        // --------------------------------------------------
 
         async function loadCurrentWeek() {
 
@@ -958,6 +1417,11 @@
                 ' Picks';
 
 
+            myPicksDescription.textContent =
+                currentSeason +
+                ' season pick history.';
+
+
             adminSeason.value =
                 currentSeason;
 
@@ -977,9 +1441,14 @@
             renderMyPick();
             renderStandings();
             renderFamilyPicks();
+            renderMyPickHistory();
             renderGames();
         }
 
+
+        // --------------------------------------------------
+        // TEAMS
+        // --------------------------------------------------
 
         async function loadTeams() {
 
@@ -1006,15 +1475,21 @@
                 new Map();
 
 
-            data.forEach(team => {
+            data.forEach(
+                team => {
 
-                teamMap.set(
-                    team.id,
-                    team
-                );
-            });
+                    teamMap.set(
+                        team.id,
+                        team
+                    );
+                }
+            );
         }
 
+
+        // --------------------------------------------------
+        // GAMES
+        // --------------------------------------------------
 
         async function loadGames() {
 
@@ -1062,6 +1537,10 @@
         }
 
 
+        // --------------------------------------------------
+        // PROFILES
+        // --------------------------------------------------
+
         async function loadProfiles() {
 
             const {
@@ -1092,6 +1571,10 @@
         }
 
 
+        // --------------------------------------------------
+        // MY SEASON PICKS
+        // --------------------------------------------------
+
         async function loadMySeasonPicks() {
 
             const {
@@ -1099,9 +1582,13 @@
                 error
             } = await supabase
                 .from('picks')
-                .select(
-                    'id, week, team_id'
-                )
+                .select(`
+                    id,
+                    week,
+                    team_id,
+                    game_id,
+                    result
+                `)
                 .eq(
                     'player_id',
                     currentUser.id
@@ -1109,6 +1596,9 @@
                 .eq(
                     'season',
                     currentSeason
+                )
+                .order(
+                    'week'
                 );
 
 
@@ -1131,7 +1621,8 @@
                     seasonPicks
                         .filter(
                             pick =>
-                                pick.week !== currentWeek
+                                pick.week !==
+                                currentWeek
                         )
                         .map(
                             pick =>
@@ -1140,6 +1631,10 @@
                 );
         }
 
+
+        // --------------------------------------------------
+        // MY CURRENT PICK
+        // --------------------------------------------------
 
         async function loadMyPick() {
 
@@ -1189,6 +1684,10 @@
         }
 
 
+        // --------------------------------------------------
+        // VISIBLE WEEK PICKS
+        // --------------------------------------------------
+
         async function loadVisiblePicks() {
 
             const {
@@ -1227,6 +1726,10 @@
         }
 
 
+        // --------------------------------------------------
+        // LOSSES
+        // --------------------------------------------------
+
         async function loadLossPicks() {
 
             const {
@@ -1262,9 +1765,167 @@
         }
 
 
+        // --------------------------------------------------
+        // MY PICK HISTORY
+        // --------------------------------------------------
+
+        function resultInfo(
+            result
+        ) {
+
+            switch (result) {
+
+                case 'win':
+                    return {
+                        label: 'WIN',
+                        className: 'win'
+                    };
+
+                case 'loss':
+                    return {
+                        label: 'LOSS',
+                        className: 'loss'
+                    };
+
+                case 'tie':
+                    return {
+                        label: 'TIE',
+                        className: 'tie'
+                    };
+
+                case 'void':
+                    return {
+                        label: 'VOID',
+                        className: 'void'
+                    };
+
+                default:
+                    return {
+                        label: 'PENDING',
+                        className: 'pending'
+                    };
+            }
+        }
+
+
+        function renderMyPickHistory() {
+
+            const pickByWeek =
+                new Map();
+
+
+            seasonPicks.forEach(
+                pick => {
+
+                    pickByWeek.set(
+                        pick.week,
+                        pick
+                    );
+                }
+            );
+
+
+            let rows =
+                [];
+
+
+            for (
+                let week = currentWeek;
+                week >= 1;
+                week--
+            ) {
+
+                const pick =
+                    pickByWeek.get(
+                        week
+                    );
+
+
+                if (!pick) {
+
+                    rows.push(`
+                        <div class="history-row">
+
+                            <div class="history-week">
+                                Week ${week}
+                            </div>
+
+                            <div class="history-team none">
+                                No pick
+                            </div>
+
+                            <div class="result-badge none">
+                                NO PICK
+                            </div>
+
+                        </div>
+                    `);
+
+                    continue;
+                }
+
+
+                const team =
+                    teamMap.get(
+                        pick.team_id
+                    );
+
+
+                const info =
+                    resultInfo(
+                        pick.result
+                    );
+
+
+                rows.push(`
+                    <div class="history-row">
+
+                        <div class="history-week">
+                            Week ${week}
+                        </div>
+
+                        <div
+                            class="
+                                history-team
+                                ${info.className}
+                            "
+                        >
+                            ${
+                                team
+                                    ? team.full_name
+                                    : 'Unknown Team'
+                            }
+                        </div>
+
+                        <div
+                            class="
+                                result-badge
+                                ${info.className}
+                            "
+                        >
+                            ${info.label}
+                        </div>
+
+                    </div>
+                `);
+            }
+
+
+            myPickHistory.innerHTML =
+                rows.join('');
+        }
+
+
+        // --------------------------------------------------
+        // STRIKE COUNT
+        // --------------------------------------------------
+
         function renderStandings() {
 
-            if (!profiles || profiles.length === 0) {
+            if (
+                !profiles ||
+                profiles.length === 0
+            ) {
 
                 standingsDiv.innerHTML =
                     '<div class="standing-row">No players found.</div>';
@@ -1275,85 +1936,103 @@
 
             const standings =
                 profiles
-                    .map(profile => {
+                    .map(
+                        profile => {
 
-                        const strikes =
-                            lossPicks.filter(
-                                pick =>
-                                    pick.player_id === profile.id
-                            ).length;
+                            const strikes =
+                                lossPicks.filter(
+                                    pick =>
+                                        pick.player_id ===
+                                        profile.id
+                                ).length;
 
 
-                        return {
-                            ...profile,
-                            strikes
-                        };
-                    })
-                    .sort((a, b) => {
-
-                        if (a.strikes !== b.strikes) {
-
-                            return a.strikes - b.strikes;
+                            return {
+                                ...profile,
+                                strikes
+                            };
                         }
+                    )
+                    .sort(
+                        (a, b) => {
+
+                            if (
+                                a.strikes !==
+                                b.strikes
+                            ) {
+
+                                return (
+                                    a.strikes -
+                                    b.strikes
+                                );
+                            }
 
 
-                        return a.display_name
-                            .localeCompare(
-                                b.display_name
-                            );
-                    });
+                            return a.display_name
+                                .localeCompare(
+                                    b.display_name
+                                );
+                        }
+                    );
 
 
             standingsDiv.innerHTML =
                 standings
-                    .map(player => {
+                    .map(
+                        player => {
 
-                        const isEliminated =
-                            player.strikes >= maxStrikes;
-
-
-                        const strikeWord =
-                            player.strikes === 1
-                                ? 'strike'
-                                : 'strikes';
+                            const isEliminated =
+                                player.strikes >=
+                                maxStrikes;
 
 
-                        return `
-                            <div class="standing-row">
+                            const strikeWord =
+                                player.strikes === 1
+                                    ? 'strike'
+                                    : 'strikes';
 
-                                <div class="standing-name">
-                                    ${player.display_name}
-                                </div>
 
-                                <div class="standing-info">
+                            return `
+                                <div class="standing-row">
 
-                                    <div class="strike-count">
-                                        ${player.strikes}
-                                        ${strikeWord}
+                                    <div class="standing-name">
+                                        ${player.display_name}
                                     </div>
 
-                                    <div class="${
-                                        isEliminated
-                                            ? 'eliminated'
-                                            : 'alive'
-                                    }">
+                                    <div class="standing-info">
 
-                                        ${
+                                        <div class="strike-count">
+                                            ${player.strikes}
+                                            ${strikeWord}
+                                        </div>
+
+                                        <div class="${
                                             isEliminated
-                                                ? 'Eliminated'
-                                                : 'Still Alive'
-                                        }
+                                                ? 'eliminated'
+                                                : 'alive'
+                                        }">
+
+                                            ${
+                                                isEliminated
+                                                    ? 'Eliminated'
+                                                    : 'Still Alive'
+                                            }
+
+                                        </div>
 
                                     </div>
 
                                 </div>
-
-                            </div>
-                        `;
-                    })
+                            `;
+                        }
+                    )
                     .join('');
         }
 
+
+        // --------------------------------------------------
+        // CURRENT PICK
+        // --------------------------------------------------
 
         function renderMyPick() {
 
@@ -1363,7 +2042,7 @@
                     'No pick submitted';
 
                 pickStatusNote.textContent =
-                    'Select an available team below.';
+                    'Select a team from the Pick tab.';
 
                 return;
             }
@@ -1378,7 +2057,8 @@
             const game =
                 currentGames.find(
                     game =>
-                        game.id === currentPick.game_id
+                        game.id ===
+                        currentPick.game_id
                 );
 
 
@@ -1403,7 +2083,10 @@
                 );
 
 
-            if (kickoff <= new Date()) {
+            if (
+                kickoff <=
+                new Date()
+            ) {
 
                 pickStatusNote.textContent =
                     'Locked. This game has started.';
@@ -1416,9 +2099,16 @@
         }
 
 
+        // --------------------------------------------------
+        // FAMILY PICKS
+        // --------------------------------------------------
+
         function renderFamilyPicks() {
 
-            if (!profiles || profiles.length === 0) {
+            if (
+                !profiles ||
+                profiles.length === 0
+            ) {
 
                 familyPicksDiv.innerHTML =
                     '<div class="family-row">No players found.</div>';
@@ -1429,70 +2119,78 @@
 
             familyPicksDiv.innerHTML =
                 profiles
-                    .map(profile => {
+                    .map(
+                        profile => {
 
-                        const pick =
-                            visiblePicks.find(
-                                visiblePick =>
-                                    visiblePick.player_id === profile.id
-                            );
-
-
-                        let pickText =
-                            'Hidden / Not Revealed';
-
-                        let pickClass =
-                            'player-pick hidden-pick';
-
-
-                        if (pick) {
-
-                            const team =
-                                teamMap.get(
-                                    pick.team_id
+                            const pick =
+                                visiblePicks.find(
+                                    visiblePick =>
+                                        visiblePick.player_id ===
+                                        profile.id
                                 );
 
 
-                            if (team) {
+                            let pickText =
+                                'Hidden / Not Revealed';
 
-                                pickText =
-                                    team.full_name;
+                            let pickClass =
+                                'player-pick hidden-pick';
 
-                                pickClass =
-                                    'player-pick';
+
+                            if (pick) {
+
+                                const team =
+                                    teamMap.get(
+                                        pick.team_id
+                                    );
+
+
+                                if (team) {
+
+                                    pickText =
+                                        team.full_name;
+
+                                    pickClass =
+                                        'player-pick';
+                                }
                             }
+
+
+                            const isMe =
+                                profile.id ===
+                                currentUser.id;
+
+
+                            return `
+                                <div class="family-row">
+
+                                    <div class="player-name">
+
+                                        ${profile.display_name}
+
+                                        ${
+                                            isMe
+                                                ? '<span class="my-pick-label">YOU</span>'
+                                                : ''
+                                        }
+
+                                    </div>
+
+                                    <div class="${pickClass}">
+                                        ${pickText}
+                                    </div>
+
+                                </div>
+                            `;
                         }
-
-
-                        const isMe =
-                            profile.id === currentUser.id;
-
-
-                        return `
-                            <div class="family-row">
-
-                                <div class="player-name">
-
-                                    ${profile.display_name}
-
-                                    ${
-                                        isMe
-                                            ? '<span class="my-pick-label">YOU</span>'
-                                            : ''
-                                    }
-
-                                </div>
-
-                                <div class="${pickClass}">
-                                    ${pickText}
-                                </div>
-
-                            </div>
-                        `;
-                    })
+                    )
                     .join('');
         }
 
+
+        // --------------------------------------------------
+        // GAME CARDS
+        // --------------------------------------------------
 
         function renderGames() {
 
@@ -1500,7 +2198,10 @@
                 new Date();
 
 
-            if (!currentGames || currentGames.length === 0) {
+            if (
+                !currentGames ||
+                currentGames.length === 0
+            ) {
 
                 gamesDiv.innerHTML =
                     '<p>No games found for this week yet.</p>';
@@ -1511,148 +2212,157 @@
 
             gamesDiv.innerHTML =
                 currentGames
-                    .map(game => {
+                    .map(
+                        game => {
 
-                        const awayTeam =
-                            teamMap.get(
-                                game.away_team_id
-                            );
+                            const awayTeam =
+                                teamMap.get(
+                                    game.away_team_id
+                                );
 
-                        const homeTeam =
-                            teamMap.get(
-                                game.home_team_id
-                            );
-
-
-                        const kickoff =
-                            new Date(
-                                game.kickoff_at
-                            );
+                            const homeTeam =
+                                teamMap.get(
+                                    game.home_team_id
+                                );
 
 
-                        const hasStarted =
-                            kickoff <= now;
+                            const kickoff =
+                                new Date(
+                                    game.kickoff_at
+                                );
 
 
-                        const formattedKickoff =
-                            kickoff.toLocaleString(
-                                [],
-                                {
-                                    weekday: 'short',
-                                    month: 'short',
-                                    day: 'numeric',
-                                    hour: 'numeric',
-                                    minute: '2-digit'
-                                }
-                            );
+                            const hasStarted =
+                                kickoff <= now;
 
 
-                        const statusText =
-                            hasStarted
-                                ? 'Locked'
-                                : 'Available';
+                            const formattedKickoff =
+                                kickoff.toLocaleString(
+                                    [],
+                                    {
+                                        weekday: 'short',
+                                        month: 'short',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: '2-digit'
+                                    }
+                                );
 
 
-                        const statusClass =
-                            hasStarted
-                                ? 'locked'
-                                : 'available';
+                            const statusText =
+                                hasStarted
+                                    ? 'Locked'
+                                    : 'Available';
 
 
-                        const awaySelected =
-                            currentPick &&
-                            currentPick.team_id === awayTeam.id;
+                            const statusClass =
+                                hasStarted
+                                    ? 'locked'
+                                    : 'available';
 
 
-                        const homeSelected =
-                            currentPick &&
-                            currentPick.team_id === homeTeam.id;
+                            const awaySelected =
+                                currentPick &&
+                                currentPick.team_id ===
+                                awayTeam.id;
 
 
-                        const awayUsed =
-                            usedTeamIds.has(
-                                awayTeam.id
-                            );
+                            const homeSelected =
+                                currentPick &&
+                                currentPick.team_id ===
+                                homeTeam.id;
 
 
-                        const homeUsed =
-                            usedTeamIds.has(
-                                homeTeam.id
-                            );
+                            const awayUsed =
+                                usedTeamIds.has(
+                                    awayTeam.id
+                                );
 
 
-                        const awayDisabled =
-                            hasStarted ||
-                            awayUsed;
+                            const homeUsed =
+                                usedTeamIds.has(
+                                    homeTeam.id
+                                );
 
 
-                        const homeDisabled =
-                            hasStarted ||
-                            homeUsed;
+                            const awayDisabled =
+                                hasStarted ||
+                                awayUsed;
 
 
-                        return `
-                            <div class="game-card">
+                            const homeDisabled =
+                                hasStarted ||
+                                homeUsed;
 
-                                <div class="game-header">
 
-                                    <div class="kickoff">
-                                        ${formattedKickoff}
+                            return `
+                                <div class="game-card">
+
+                                    <div class="game-header">
+
+                                        <div class="kickoff">
+                                            ${formattedKickoff}
+                                        </div>
+
+                                        <div
+                                            class="
+                                                status
+                                                ${statusClass}
+                                            "
+                                        >
+                                            ${statusText}
+                                        </div>
+
                                     </div>
 
-                                    <div class="status ${statusClass}">
-                                        ${statusText}
+
+                                    <div class="teams">
+
+                                        <button
+                                            class="
+                                                team-button
+                                                ${awaySelected ? 'selected' : ''}
+                                                ${awayUsed ? 'used' : ''}
+                                            "
+                                            data-game-id="${game.id}"
+                                            data-team-id="${awayTeam.id}"
+                                            ${awayDisabled ? 'disabled' : ''}
+                                        >
+                                            ${awayTeam.full_name}
+
+                                            ${
+                                                awayUsed
+                                                    ? '<span class="used-label">USED</span>'
+                                                    : ''
+                                            }
+                                        </button>
+
+
+                                        <button
+                                            class="
+                                                team-button
+                                                ${homeSelected ? 'selected' : ''}
+                                                ${homeUsed ? 'used' : ''}
+                                            "
+                                            data-game-id="${game.id}"
+                                            data-team-id="${homeTeam.id}"
+                                            ${homeDisabled ? 'disabled' : ''}
+                                        >
+                                            ${homeTeam.full_name}
+
+                                            ${
+                                                homeUsed
+                                                    ? '<span class="used-label">USED</span>'
+                                                    : ''
+                                            }
+                                        </button>
+
                                     </div>
 
                                 </div>
-
-
-                                <div class="teams">
-
-                                    <button
-                                        class="
-                                            team-button
-                                            ${awaySelected ? 'selected' : ''}
-                                            ${awayUsed ? 'used' : ''}
-                                        "
-                                        data-game-id="${game.id}"
-                                        data-team-id="${awayTeam.id}"
-                                        ${awayDisabled ? 'disabled' : ''}
-                                    >
-                                        ${awayTeam.full_name}
-
-                                        ${
-                                            awayUsed
-                                                ? '<span class="used-label">USED</span>'
-                                                : ''
-                                        }
-                                    </button>
-
-
-                                    <button
-                                        class="
-                                            team-button
-                                            ${homeSelected ? 'selected' : ''}
-                                            ${homeUsed ? 'used' : ''}
-                                        "
-                                        data-game-id="${game.id}"
-                                        data-team-id="${homeTeam.id}"
-                                        ${homeDisabled ? 'disabled' : ''}
-                                    >
-                                        ${homeTeam.full_name}
-
-                                        ${
-                                            homeUsed
-                                                ? '<span class="used-label">USED</span>'
-                                                : ''
-                                        }
-                                    </button>
-
-                                </div>
-
-                            </div>
-                        `;
-                    })
+                            `;
+                        }
+                    )
                     .join('');
 
 
@@ -1660,32 +2370,38 @@
                 .querySelectorAll(
                     '.team-button:not(:disabled)'
                 )
-                .forEach(button => {
+                .forEach(
+                    button => {
 
-                    button.addEventListener(
-                        'click',
-                        async () => {
+                        button.addEventListener(
+                            'click',
+                            async () => {
 
-                            const gameId =
-                                Number(
-                                    button.dataset.gameId
+                                const gameId =
+                                    Number(
+                                        button.dataset.gameId
+                                    );
+
+                                const teamId =
+                                    Number(
+                                        button.dataset.teamId
+                                    );
+
+
+                                await chooseTeam(
+                                    gameId,
+                                    teamId
                                 );
-
-                            const teamId =
-                                Number(
-                                    button.dataset.teamId
-                                );
-
-
-                            await chooseTeam(
-                                gameId,
-                                teamId
-                            );
-                        }
-                    );
-                });
+                            }
+                        );
+                    }
+                );
         }
 
+
+        // --------------------------------------------------
+        // CHOOSE TEAM
+        // --------------------------------------------------
 
         async function chooseTeam(
             gameId,
@@ -1705,7 +2421,8 @@
 
             if (
                 currentPick &&
-                currentPick.team_id === teamId
+                currentPick.team_id ===
+                teamId
             ) {
 
                 pickMessage.textContent =
@@ -1715,7 +2432,11 @@
             }
 
 
-            if (usedTeamIds.has(teamId)) {
+            if (
+                usedTeamIds.has(
+                    teamId
+                )
+            ) {
 
                 pickMessage.textContent =
                     'You already used this team earlier in the season.';
@@ -1781,6 +2502,10 @@
         }
 
 
+        // --------------------------------------------------
+        // INSERT PICK
+        // --------------------------------------------------
+
         async function insertPick(
             gameId,
             teamId
@@ -1791,11 +2516,20 @@
             } = await supabase
                 .from('picks')
                 .insert({
-                    player_id: currentUser.id,
-                    game_id: gameId,
-                    season: currentSeason,
-                    week: currentWeek,
-                    team_id: teamId
+                    player_id:
+                        currentUser.id,
+
+                    game_id:
+                        gameId,
+
+                    season:
+                        currentSeason,
+
+                    week:
+                        currentWeek,
+
+                    team_id:
+                        teamId
                 });
 
 
@@ -1817,6 +2551,10 @@
         }
 
 
+        // --------------------------------------------------
+        // UPDATE PICK
+        // --------------------------------------------------
+
         async function updatePick(
             gameId,
             teamId
@@ -1829,11 +2567,15 @@
                 .from('picks')
                 .update(
                     {
-                        game_id: gameId,
-                        team_id: teamId
+                        game_id:
+                            gameId,
+
+                        team_id:
+                            teamId
                     },
                     {
-                        count: 'exact'
+                        count:
+                            'exact'
                     }
                 )
                 .eq(
@@ -1852,7 +2594,9 @@
             }
 
 
-            if (count === 0) {
+            if (
+                count === 0
+            ) {
 
                 pickMessage.textContent =
                     'The pick could not be changed. The game may have already started.';
@@ -1869,6 +2613,10 @@
         }
 
 
+        // --------------------------------------------------
+        // REFRESH
+        // --------------------------------------------------
+
         async function refreshEverything() {
 
             await loadMySeasonPicks();
@@ -1880,9 +2628,14 @@
             renderMyPick();
             renderStandings();
             renderFamilyPicks();
+            renderMyPickHistory();
             renderGames();
         }
 
+
+        // --------------------------------------------------
+        // COMMISSIONER WEEK BUTTONS
+        // --------------------------------------------------
 
         document
             .getElementById(
@@ -1898,7 +2651,9 @@
                         );
 
 
-                    if (week > 1) {
+                    if (
+                        week > 1
+                    ) {
 
                         adminWeek.value =
                             week - 1;
@@ -1921,7 +2676,9 @@
                         );
 
 
-                    if (week < 22) {
+                    if (
+                        week < 22
+                    ) {
 
                         adminWeek.value =
                             week + 1;
@@ -1929,6 +2686,10 @@
                 }
             );
 
+
+        // --------------------------------------------------
+        // SAVE WEEK
+        // --------------------------------------------------
 
         document
             .getElementById(
@@ -1959,7 +2720,9 @@
 
 
                     if (
-                        !Number.isInteger(season) ||
+                        !Number.isInteger(
+                            season
+                        ) ||
                         season < 2020 ||
                         season > 2100
                     ) {
@@ -1972,7 +2735,9 @@
 
 
                     if (
-                        !Number.isInteger(week) ||
+                        !Number.isInteger(
+                            week
+                        ) ||
                         week < 1 ||
                         week > 22
                     ) {
@@ -2006,12 +2771,19 @@
                     const {
                         error: updateError
                     } = await supabase
-                        .from('pool_settings')
+                        .from(
+                            'pool_settings'
+                        )
                         .update({
-                            current_season: season,
-                            current_week: week,
+                            current_season:
+                                season,
+
+                            current_week:
+                                week,
+
                             updated_at:
-                                new Date().toISOString()
+                                new Date()
+                                    .toISOString()
                         })
                         .eq(
                             'id',
@@ -2071,6 +2843,10 @@
             );
 
 
+        // --------------------------------------------------
+        // LOGIN
+        // --------------------------------------------------
+
         document
             .getElementById(
                 'loginButton'
@@ -2085,14 +2861,18 @@
 
                     const email =
                         document
-                            .getElementById('email')
+                            .getElementById(
+                                'email'
+                            )
                             .value
                             .trim();
 
 
                     const password =
                         document
-                            .getElementById('password')
+                            .getElementById(
+                                'password'
+                            )
                             .value;
 
 
@@ -2134,7 +2914,10 @@
                 'keydown',
                 event => {
 
-                    if (event.key === 'Enter') {
+                    if (
+                        event.key ===
+                        'Enter'
+                    ) {
 
                         document
                             .getElementById(
@@ -2146,6 +2929,10 @@
             );
 
 
+        // --------------------------------------------------
+        // FORGOT PASSWORD
+        // --------------------------------------------------
+
         document
             .getElementById(
                 'forgotPasswordButton'
@@ -2156,7 +2943,9 @@
 
                     const email =
                         document
-                            .getElementById('email')
+                            .getElementById(
+                                'email'
+                            )
                             .value
                             .trim();
 
@@ -2206,6 +2995,10 @@
             );
 
 
+        // --------------------------------------------------
+        // RESET PASSWORD
+        // --------------------------------------------------
+
         document
             .getElementById(
                 'setNewPasswordButton'
@@ -2229,7 +3022,10 @@
                             .value;
 
 
-                    if (newPassword.length < 8) {
+                    if (
+                        newPassword.length <
+                        8
+                    ) {
 
                         resetPasswordMessage.textContent =
                             'Password must be at least 8 characters.';
@@ -2259,7 +3055,8 @@
                         error
                     } = await supabase.auth
                         .updateUser({
-                            password: newPassword
+                            password:
+                                newPassword
                         });
 
 
@@ -2273,21 +3070,19 @@
                     }
 
 
-                    resetPasswordMessage.textContent =
-                        'Password changed successfully.';
-
-
                     document
                         .getElementById(
                             'resetNewPassword'
                         )
-                        .value = '';
+                        .value =
+                            '';
 
                     document
                         .getElementById(
                             'resetConfirmPassword'
                         )
-                        .value = '';
+                        .value =
+                            '';
 
 
                     recoveryMode =
@@ -2322,6 +3117,10 @@
             );
 
 
+        // --------------------------------------------------
+        // CHANGE PASSWORD
+        // --------------------------------------------------
+
         document
             .getElementById(
                 'changePasswordButton'
@@ -2345,7 +3144,10 @@
                             .value;
 
 
-                    if (newPassword.length < 8) {
+                    if (
+                        newPassword.length <
+                        8
+                    ) {
 
                         changePasswordMessage.textContent =
                             'Password must be at least 8 characters.';
@@ -2374,7 +3176,8 @@
                         error
                     } = await supabase.auth
                         .updateUser({
-                            password: newPassword
+                            password:
+                                newPassword
                         });
 
 
@@ -2392,13 +3195,15 @@
                         .getElementById(
                             'accountNewPassword'
                         )
-                        .value = '';
+                        .value =
+                            '';
 
                     document
                         .getElementById(
                             'accountConfirmPassword'
                         )
-                        .value = '';
+                        .value =
+                            '';
 
 
                     changePasswordMessage.textContent =
@@ -2406,6 +3211,10 @@
                 }
             );
 
+
+        // --------------------------------------------------
+        // LOGOUT
+        // --------------------------------------------------
 
         document
             .getElementById(
@@ -2453,6 +3262,9 @@
                     standingsDiv.innerHTML =
                         '';
 
+                    myPickHistory.innerHTML =
+                        '';
+
                     welcome.textContent =
                         '';
 
@@ -2476,6 +3288,10 @@
                 }
             );
 
+
+        // --------------------------------------------------
+        // AUTH EVENTS
+        // --------------------------------------------------
 
         const currentUrl =
             new URL(
@@ -2525,7 +3341,9 @@
                                 'INITIAL_SESSION'
                             ) {
 
-                                if (waitingForAuthCallback) {
+                                if (
+                                    waitingForAuthCallback
+                                ) {
 
                                     return;
                                 }
@@ -2552,7 +3370,9 @@
                                 'SIGNED_OUT'
                             ) {
 
-                                if (!recoveryMode) {
+                                if (
+                                    !recoveryMode
+                                ) {
 
                                     showLoginScreen();
                                 }
@@ -2565,7 +3385,13 @@
             );
 
 
-        if ('serviceWorker' in navigator) {
+        // --------------------------------------------------
+        // SERVICE WORKER
+        // --------------------------------------------------
+
+        if (
+            'serviceWorker' in navigator
+        ) {
 
             window.addEventListener(
                 'load',
@@ -2578,10 +3404,6 @@
                             .register(
                                 './service-worker.js'
                             );
-
-                        console.log(
-                            'Service worker registered.'
-                        );
 
                     } catch (error) {
 
