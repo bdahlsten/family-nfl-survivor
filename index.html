@@ -68,16 +68,19 @@
         }
 
         input,
-        button {
+        button,
+        select {
             font-size: 16px;
         }
 
-        input {
+        input,
+        select {
             width: 100%;
             padding: 12px;
             margin: 8px 0;
             border: 1px solid #bbb;
             border-radius: 6px;
+            background: white;
         }
 
         button {
@@ -91,9 +94,7 @@
             background: white;
             padding: 25px;
             border-radius: 10px;
-            box-shadow:
-                0 1px 4px
-                rgba(0, 0, 0, 0.12);
+            box-shadow: 0 1px 4px rgba(0,0,0,.12);
         }
 
         #loginButton,
@@ -110,7 +111,7 @@
             background: none;
             color: #2557a7;
             text-decoration: underline;
-            padding: 12px 0 4px 0;
+            padding: 12px 0 4px;
         }
 
         #message,
@@ -119,10 +120,7 @@
             text-align: center;
         }
 
-        #resetPasswordScreen {
-            display: none;
-        }
-
+        #resetPasswordScreen,
         #app {
             display: none;
         }
@@ -152,18 +150,13 @@
             margin-bottom: 12px;
         }
 
-
-        /* CURRENT PICK */
-
         #pickStatus {
             background: white;
             border-radius: 10px;
             padding: 18px;
             margin-bottom: 20px;
             text-align: center;
-            box-shadow:
-                0 1px 4px
-                rgba(0, 0, 0, 0.12);
+            box-shadow: 0 1px 4px rgba(0,0,0,.12);
         }
 
         #pickStatusTitle {
@@ -191,41 +184,51 @@
             font-weight: bold;
         }
 
-
-        /* STRIKES / FAMILY PICKS */
-
         #standings,
-        #familyPicks {
+        #familyPicks,
+        #myPickHistory,
+        #playerHistory,
+        #weekHistory {
             background: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow:
-                0 1px 4px
-                rgba(0, 0, 0, 0.12);
+            box-shadow: 0 1px 4px rgba(0,0,0,.12);
             margin-bottom: 25px;
         }
 
         .standing-row,
-        .family-row {
+        .family-row,
+        .history-row,
+        .week-history-row {
+            border-bottom: 1px solid #eee;
+        }
+
+        .standing-row:last-child,
+        .family-row:last-child,
+        .history-row:last-child,
+        .week-history-row:last-child {
+            border-bottom: none;
+        }
+
+        .standing-row,
+        .family-row,
+        .week-history-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 14px 16px;
-            border-bottom: 1px solid #eee;
             gap: 12px;
         }
 
-        .standing-row:last-child,
-        .family-row:last-child {
-            border-bottom: none;
-        }
-
         .standing-name,
-        .player-name {
+        .player-name,
+        .week-player-name {
             font-weight: bold;
         }
 
-        .standing-info {
+        .standing-info,
+        .player-pick,
+        .week-player-pick {
             text-align: right;
         }
 
@@ -246,10 +249,6 @@
             margin-top: 3px;
         }
 
-        .player-pick {
-            text-align: right;
-        }
-
         .hidden-pick {
             color: #888;
             font-style: italic;
@@ -264,29 +263,12 @@
             color: #2557a7;
         }
 
-
-        /* MY PICK HISTORY */
-
-        #myPickHistory {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow:
-                0 1px 4px
-                rgba(0, 0, 0, 0.12);
-        }
-
         .history-row {
             display: grid;
             grid-template-columns: 75px 1fr auto;
             gap: 12px;
             align-items: center;
             padding: 15px 16px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .history-row:last-child {
-            border-bottom: none;
         }
 
         .history-week {
@@ -312,8 +294,13 @@
 
         .history-team.pending,
         .history-team.void,
-        .history-team.none {
+        .history-team.none,
+        .history-team.hidden {
             color: #666;
+        }
+
+        .history-team.hidden {
+            font-style: italic;
         }
 
         .result-badge {
@@ -339,19 +326,12 @@
             background: #fff1c8;
         }
 
-        .result-badge.pending {
+        .result-badge.pending,
+        .result-badge.void,
+        .result-badge.none,
+        .result-badge.hidden {
             color: #555;
-            background: #eeeeee;
-        }
-
-        .result-badge.void {
-            color: #555;
-            background: #eeeeee;
-        }
-
-        .result-badge.none {
-            color: #777;
-            background: #f3f3f3;
+            background: #eee;
         }
 
         .screen-description {
@@ -361,21 +341,42 @@
             margin-bottom: 18px;
         }
 
-
-        /* PLAYERS PLACEHOLDER */
-
-        .placeholder-card {
+        .history-controls {
             background: white;
-            padding: 20px;
+            padding: 16px;
             border-radius: 10px;
-            box-shadow:
-                0 1px 4px
-                rgba(0, 0, 0, 0.12);
-            color: #555;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 4px rgba(0,0,0,.12);
         }
 
+        .view-toggle {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
 
-        /* COMMISSIONER */
+        .view-toggle button {
+            padding: 11px;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            background: white;
+            font-weight: bold;
+        }
+
+        .view-toggle button.active {
+            background: #2557a7;
+            color: white;
+            border-color: #2557a7;
+        }
+
+        .history-view {
+            display: none;
+        }
+
+        .history-view.active {
+            display: block;
+        }
 
         #commissionerPanel {
             display: none;
@@ -428,9 +429,6 @@
             font-weight: bold;
         }
 
-
-        /* GAMES */
-
         #games {
             display: flex;
             flex-direction: column;
@@ -441,9 +439,7 @@
             background: white;
             border-radius: 10px;
             padding: 16px;
-            box-shadow:
-                0 1px 4px
-                rgba(0, 0, 0, 0.12);
+            box-shadow: 0 1px 4px rgba(0,0,0,.12);
         }
 
         .game-header {
@@ -491,10 +487,6 @@
             width: 100%;
         }
 
-        .team-button:not(:disabled):hover {
-            background: #f0f4ff;
-        }
-
         .team-button.selected {
             background: #dce8ff;
             border: 2px solid #2557a7;
@@ -530,26 +522,25 @@
             padding: 20px;
         }
 
-
-        /* ACCOUNT */
-
         #accountPanel {
             background: white;
             border-radius: 10px;
             padding: 18px;
-            box-shadow:
-                0 1px 4px
-                rgba(0, 0, 0, 0.12);
+            box-shadow: 0 1px 4px rgba(0,0,0,.12);
         }
 
-        #accountPanel h3 {
-            margin-top: 0;
+        #changePasswordButton,
+        #logoutButton {
+            width: 100%;
+            padding: 12px;
         }
 
         #changePasswordButton {
-            width: 100%;
-            padding: 12px;
             margin-top: 8px;
+        }
+
+        #logoutButton {
+            margin-top: 20px;
         }
 
         #changePasswordMessage {
@@ -561,17 +552,8 @@
         .password-help {
             font-size: 13px;
             color: #666;
-            margin: 3px 0 8px 0;
+            margin: 3px 0 8px;
         }
-
-        #logoutButton {
-            width: 100%;
-            padding: 12px;
-            margin-top: 20px;
-        }
-
-
-        /* BOTTOM NAVIGATION */
 
         #bottomNav {
             position: fixed;
@@ -584,11 +566,8 @@
             grid-template-columns: repeat(5, 1fr);
             background: white;
             border-top: 1px solid #ddd;
-            box-shadow:
-                0 -2px 8px
-                rgba(0, 0, 0, 0.10);
-            padding-bottom:
-                env(safe-area-inset-bottom);
+            box-shadow: 0 -2px 8px rgba(0,0,0,.10);
+            padding-bottom: env(safe-area-inset-bottom);
             z-index: 1000;
         }
 
@@ -596,7 +575,7 @@
             min-width: 0;
             border: none;
             background: white;
-            padding: 13px 2px 11px 2px;
+            padding: 13px 2px 11px;
             font-size: 12px;
             color: #666;
             font-weight: bold;
@@ -606,7 +585,6 @@
             color: #2557a7;
             background: #f1f5ff;
         }
-
 
         @media (max-width: 500px) {
 
@@ -620,11 +598,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .family-row,
-            .standing-row {
-                align-items: flex-start;
-            }
-
             .history-row {
                 grid-template-columns: 65px 1fr auto;
                 padding-left: 12px;
@@ -636,39 +609,18 @@
     </style>
 </head>
 
-
 <body>
-
-    <!-- LOGIN -->
 
     <div id="login">
 
-        <h1>
-            Family NFL Survivor
-        </h1>
+        <h1>Family NFL Survivor</h1>
 
-        <input
-            id="email"
-            type="email"
-            placeholder="Email"
-            autocomplete="email"
-        >
+        <input id="email" type="email" placeholder="Email">
+        <input id="password" type="password" placeholder="Password">
 
-        <input
-            id="password"
-            type="password"
-            placeholder="Password"
-            autocomplete="current-password"
-        >
+        <button id="loginButton">Sign In</button>
 
-        <button id="loginButton">
-            Sign In
-        </button>
-
-        <button
-            id="forgotPasswordButton"
-            type="button"
-        >
+        <button id="forgotPasswordButton">
             Forgot password?
         </button>
 
@@ -677,35 +629,21 @@
     </div>
 
 
-    <!-- PASSWORD RESET -->
-
     <div id="resetPasswordScreen">
 
-        <h1>
-            Set New Password
-        </h1>
-
-        <p>
-            Enter the new password you want to use for your survivor account.
-        </p>
+        <h1>Set New Password</h1>
 
         <input
             id="resetNewPassword"
             type="password"
             placeholder="New password"
-            autocomplete="new-password"
         >
 
         <input
             id="resetConfirmPassword"
             type="password"
             placeholder="Confirm new password"
-            autocomplete="new-password"
         >
-
-        <div class="password-help">
-            Password must be at least 8 characters.
-        </div>
 
         <button id="setNewPasswordButton">
             Set New Password
@@ -715,8 +653,6 @@
 
     </div>
 
-
-    <!-- APP -->
 
     <div id="app">
 
@@ -729,10 +665,7 @@
         <div id="weekInfo"></div>
 
 
-        <!-- HOME -->
-
         <section
-            id="homeSection"
             class="app-section active"
             data-section="home"
         >
@@ -747,43 +680,29 @@
                     No pick submitted
                 </div>
 
-                <div id="pickStatusNote">
-                    Select an available team below.
-                </div>
+                <div id="pickStatusNote"></div>
 
             </div>
 
-
             <div id="pickMessage"></div>
-
 
             <h3 class="section-title">
                 Strike Count
             </h3>
 
-            <div id="standings">
-                Loading strike counts...
-            </div>
-
+            <div id="standings"></div>
 
             <h3
-                class="section-title"
                 id="weekPicksHeading"
-            >
-                Week Picks
-            </h3>
+                class="section-title"
+            ></h3>
 
-            <div id="familyPicks">
-                Loading picks...
-            </div>
+            <div id="familyPicks"></div>
 
         </section>
 
 
-        <!-- MY PICKS -->
-
         <section
-            id="myPicksSection"
             class="app-section"
             data-section="my-picks"
         >
@@ -793,42 +712,95 @@
             </h3>
 
             <div
-                class="screen-description"
                 id="myPicksDescription"
-            >
-                Your season pick history.
-            </div>
+                class="screen-description"
+            ></div>
 
-            <div id="myPickHistory">
-                Loading pick history...
-            </div>
+            <div id="myPickHistory"></div>
 
         </section>
 
 
-        <!-- PLAYERS -->
-
         <section
-            id="playersSection"
             class="app-section"
             data-section="players"
         >
 
             <h3 class="section-title">
-                Players
+                Pick History
             </h3>
 
-            <div class="placeholder-card">
-                Player pick histories will be added here next.
+            <div class="history-controls">
+
+                <div class="view-toggle">
+
+                    <button
+                        id="byPlayerButton"
+                        class="active"
+                    >
+                        By Player
+                    </button>
+
+                    <button id="byWeekButton">
+                        By Week
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="playerHistoryControls"
+                    class="history-view active"
+                >
+
+                    <label>
+                        Player
+                    </label>
+
+                    <select id="playerHistorySelect"></select>
+
+                </div>
+
+
+                <div
+                    id="weekHistoryControls"
+                    class="history-view"
+                >
+
+                    <label>
+                        Week
+                    </label>
+
+                    <select id="weekHistorySelect"></select>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="playerHistoryView"
+                class="history-view active"
+            >
+
+                <div id="playerHistory"></div>
+
+            </div>
+
+
+            <div
+                id="weekHistoryView"
+                class="history-view"
+            >
+
+                <div id="weekHistory"></div>
+
             </div>
 
         </section>
 
 
-        <!-- MAKE PICK -->
-
         <section
-            id="pickSection"
             class="app-section"
             data-section="pick"
         >
@@ -846,10 +818,7 @@
         </section>
 
 
-        <!-- ACCOUNT -->
-
         <section
-            id="accountSection"
             class="app-section"
             data-section="account"
         >
@@ -864,37 +833,31 @@
 
                     <div class="admin-field">
 
-                        <label for="adminSeason">
+                        <label>
                             Season
                         </label>
 
                         <input
                             id="adminSeason"
                             type="number"
-                            min="2020"
-                            max="2100"
                         >
 
                     </div>
 
-
                     <div class="admin-field">
 
-                        <label for="adminWeek">
+                        <label>
                             Week
                         </label>
 
                         <input
                             id="adminWeek"
                             type="number"
-                            min="1"
-                            max="22"
                         >
 
                     </div>
 
                 </div>
-
 
                 <div class="admin-week-buttons">
 
@@ -907,7 +870,6 @@
                     </button>
 
                 </div>
-
 
                 <button id="saveWeekButton">
                     Save &amp; Sync Week
@@ -924,22 +886,16 @@
                     Account
                 </h3>
 
-                <div class="password-help">
-                    Change the password you use to sign in.
-                </div>
-
                 <input
                     id="accountNewPassword"
                     type="password"
                     placeholder="New password"
-                    autocomplete="new-password"
                 >
 
                 <input
                     id="accountConfirmPassword"
                     type="password"
                     placeholder="Confirm new password"
-                    autocomplete="new-password"
                 >
 
                 <button id="changePasswordButton">
@@ -950,15 +906,12 @@
 
             </div>
 
-
             <button id="logoutButton">
                 Sign Out
             </button>
 
         </section>
 
-
-        <!-- BOTTOM NAV -->
 
         <nav id="bottomNav">
 
@@ -1010,17 +963,10 @@
         'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 
-        const supabaseUrl =
-            'https://nvtsrpfzedzzoeyvobcb.supabase.co';
-
-        const supabaseKey =
-            'sb_publishable_7xYfbXDNCZSUqFTipF9A-Q_MHeVqTnz';
-
-        const supabase =
-            createClient(
-                supabaseUrl,
-                supabaseKey
-            );
+        const supabase = createClient(
+            'https://nvtsrpfzedzzoeyvobcb.supabase.co',
+            'sb_publishable_7xYfbXDNCZSUqFTipF9A-Q_MHeVqTnz'
+        );
 
 
         let currentUser = null;
@@ -1028,177 +974,49 @@
         let currentSeason = null;
         let currentWeek = null;
         let maxStrikes = 3;
-        let currentPick = null;
-        let currentGames = [];
+
         let profiles = [];
-        let visiblePicks = [];
+        let teamMap = new Map();
+
+        let currentGames = [];
+        let seasonGames = [];
+
+        let currentPick = null;
         let seasonPicks = [];
+        let visiblePicks = [];
+        let visibleSeasonPicks = [];
         let lossPicks = [];
+
+        let usedTeamIds = new Set();
         let recoveryMode = false;
 
-        let usedTeamIds =
-            new Set();
 
-        let teamMap =
-            new Map();
+        const $ =
+            id => document.getElementById(id);
 
 
-        const loginDiv =
-            document.getElementById(
-                'login'
-            );
-
-        const resetPasswordScreen =
-            document.getElementById(
-                'resetPasswordScreen'
-            );
-
-        const appDiv =
-            document.getElementById(
-                'app'
-            );
-
-        const message =
-            document.getElementById(
-                'message'
-            );
-
-        const resetPasswordMessage =
-            document.getElementById(
-                'resetPasswordMessage'
-            );
-
-        const welcome =
-            document.getElementById(
-                'welcome'
-            );
-
-        const poolName =
-            document.getElementById(
-                'poolName'
-            );
-
-        const weekInfo =
-            document.getElementById(
-                'weekInfo'
-            );
-
-        const weekPicksHeading =
-            document.getElementById(
-                'weekPicksHeading'
-            );
-
-        const myPicksDescription =
-            document.getElementById(
-                'myPicksDescription'
-            );
-
-        const myPickHistory =
-            document.getElementById(
-                'myPickHistory'
-            );
-
-        const gamesDiv =
-            document.getElementById(
-                'games'
-            );
-
-        const loadingDiv =
-            document.getElementById(
-                'loading'
-            );
-
-        const pickStatusTeam =
-            document.getElementById(
-                'pickStatusTeam'
-            );
-
-        const pickStatusNote =
-            document.getElementById(
-                'pickStatusNote'
-            );
-
-        const pickMessage =
-            document.getElementById(
-                'pickMessage'
-            );
-
-        const familyPicksDiv =
-            document.getElementById(
-                'familyPicks'
-            );
-
-        const standingsDiv =
-            document.getElementById(
-                'standings'
-            );
-
-        const commissionerPanel =
-            document.getElementById(
-                'commissionerPanel'
-            );
-
-        const commissionerMessage =
-            document.getElementById(
-                'commissionerMessage'
-            );
-
-        const adminSeason =
-            document.getElementById(
-                'adminSeason'
-            );
-
-        const adminWeek =
-            document.getElementById(
-                'adminWeek'
-            );
-
-        const changePasswordMessage =
-            document.getElementById(
-                'changePasswordMessage'
-            );
-
-
-        // --------------------------------------------------
-        // NAVIGATION
-        // --------------------------------------------------
-
-        function showAppSection(
-            target
-        ) {
+        function showAppSection(target) {
 
             document
-                .querySelectorAll(
-                    '.app-section'
-                )
-                .forEach(
-                    section => {
+                .querySelectorAll('.app-section')
+                .forEach(section => {
 
-                        section.classList
-                            .toggle(
-                                'active',
-                                section.dataset.section ===
-                                target
-                            );
-                    }
-                );
+                    section.classList.toggle(
+                        'active',
+                        section.dataset.section === target
+                    );
+                });
 
 
             document
-                .querySelectorAll(
-                    '.nav-button'
-                )
-                .forEach(
-                    button => {
+                .querySelectorAll('.nav-button')
+                .forEach(button => {
 
-                        button.classList
-                            .toggle(
-                                'active',
-                                button.dataset.target ===
-                                target
-                            );
-                    }
-                );
+                    button.classList.toggle(
+                        'active',
+                        button.dataset.target === target
+                    );
+                });
 
 
             window.scrollTo({
@@ -1209,38 +1027,30 @@
 
 
         document
-            .querySelectorAll(
-                '.nav-button'
-            )
-            .forEach(
-                button => {
+            .querySelectorAll('.nav-button')
+            .forEach(button => {
 
-                    button.addEventListener(
-                        'click',
-                        () => {
+                button.addEventListener(
+                    'click',
+                    () => {
 
-                            showAppSection(
-                                button.dataset.target
-                            );
-                        }
-                    );
-                }
-            );
+                        showAppSection(
+                            button.dataset.target
+                        );
+                    }
+                );
+            });
 
-
-        // --------------------------------------------------
-        // SCREEN HELPERS
-        // --------------------------------------------------
 
         function showLoginScreen() {
 
-            loginDiv.style.display =
+            $('login').style.display =
                 'block';
 
-            resetPasswordScreen.style.display =
+            $('resetPasswordScreen').style.display =
                 'none';
 
-            appDiv.style.display =
+            $('app').style.display =
                 'none';
         }
 
@@ -1250,35 +1060,26 @@
             recoveryMode =
                 true;
 
-            loginDiv.style.display =
+            $('login').style.display =
                 'none';
 
-            appDiv.style.display =
+            $('app').style.display =
                 'none';
 
-            resetPasswordScreen.style.display =
+            $('resetPasswordScreen').style.display =
                 'block';
-
-            resetPasswordMessage.textContent =
-                '';
         }
 
 
-        // --------------------------------------------------
-        // LOGGED IN USER
-        // --------------------------------------------------
-
-        async function showLoggedInUser(
-            user
-        ) {
+        async function showLoggedInUser(user) {
 
             currentUser =
                 user;
 
 
             const {
-                data: profile,
-                error: profileError
+                data,
+                error
             } = await supabase
                 .from('profiles')
                 .select(
@@ -1291,109 +1092,60 @@
                 .single();
 
 
-            if (profileError) {
+            if (error) {
 
                 showLoginScreen();
 
-                message.textContent =
-                    'Profile error: ' +
-                    profileError.message;
+                $('message').textContent =
+                    error.message;
 
                 return;
             }
 
 
             currentProfile =
-                profile;
-
-            recoveryMode =
-                false;
+                data;
 
 
-            loginDiv.style.display =
+            $('login').style.display =
                 'none';
 
-            resetPasswordScreen.style.display =
+            $('resetPasswordScreen').style.display =
                 'none';
 
-            appDiv.style.display =
+            $('app').style.display =
                 'block';
 
 
-            welcome.textContent =
+            $('welcome').textContent =
                 'Welcome, ' +
-                profile.display_name;
+                data.display_name;
 
 
-            if (
-                profile.is_commissioner
-            ) {
-
-                commissionerPanel.style.display =
-                    'block';
-
-            } else {
-
-                commissionerPanel.style.display =
-                    'none';
-            }
+            $('commissionerPanel').style.display =
+                data.is_commissioner
+                    ? 'block'
+                    : 'none';
 
 
-            showAppSection(
-                'home'
-            );
-
+            showAppSection('home');
 
             await loadCurrentWeek();
         }
 
 
-        // --------------------------------------------------
-        // LOAD WEEK
-        // --------------------------------------------------
-
         async function loadCurrentWeek() {
 
-            loadingDiv.style.display =
-                'block';
-
-            loadingDiv.textContent =
-                'Loading games...';
-
-            gamesDiv.innerHTML =
-                '';
-
-            pickMessage.textContent =
-                '';
-
-
             const {
-                data: settings,
-                error: settingsError
+                data: settings
             } = await supabase
                 .from('pool_settings')
                 .select(
                     'pool_name, current_season, current_week, max_strikes'
                 )
-                .eq(
-                    'id',
-                    1
-                )
+                .eq('id', 1)
                 .single();
 
-
-            if (settingsError) {
-
-                loadingDiv.textContent =
-                    'Error loading pool settings: ' +
-                    settingsError.message;
-
-                return;
-            }
-
-
-            poolName.textContent =
-                settings.pool_name;
 
             currentSeason =
                 settings.current_season;
@@ -1405,97 +1157,119 @@
                 settings.max_strikes;
 
 
-            weekInfo.textContent =
+            $('poolName').textContent =
+                settings.pool_name;
+
+            $('weekInfo').textContent =
                 currentSeason +
                 ' Season - Week ' +
                 currentWeek;
 
-
-            weekPicksHeading.textContent =
+            $('weekPicksHeading').textContent =
                 'Week ' +
                 currentWeek +
                 ' Picks';
 
-
-            myPicksDescription.textContent =
+            $('myPicksDescription').textContent =
                 currentSeason +
                 ' season pick history.';
 
-
-            adminSeason.value =
+            $('adminSeason').value =
                 currentSeason;
 
-            adminWeek.value =
+            $('adminWeek').value =
                 currentWeek;
 
 
             await loadTeams();
-            await loadGames();
             await loadProfiles();
+            await loadSeasonGames();
+            await loadGames();
             await loadMySeasonPicks();
             await loadMyPick();
             await loadVisiblePicks();
+            await loadVisibleSeasonPicks();
             await loadLossPicks();
 
+
+            populateHistorySelectors();
 
             renderMyPick();
             renderStandings();
             renderFamilyPicks();
             renderMyPickHistory();
+            renderPlayerHistory();
+            renderWeekHistory();
             renderGames();
         }
 
 
-        // --------------------------------------------------
-        // TEAMS
-        // --------------------------------------------------
-
         async function loadTeams() {
 
             const {
-                data,
-                error
+                data
             } = await supabase
                 .from('teams')
                 .select(
-                    'id, abbreviation, full_name'
+                    'id, full_name'
                 );
-
-
-            if (error) {
-
-                throw new Error(
-                    'Error loading teams: ' +
-                    error.message
-                );
-            }
 
 
             teamMap =
                 new Map();
 
 
-            data.forEach(
-                team => {
+            data.forEach(team => {
 
-                    teamMap.set(
-                        team.id,
-                        team
-                    );
-                }
-            );
+                teamMap.set(
+                    team.id,
+                    team
+                );
+            });
         }
 
 
-        // --------------------------------------------------
-        // GAMES
-        // --------------------------------------------------
+        async function loadProfiles() {
+
+            const {
+                data
+            } = await supabase
+                .from('profiles')
+                .select(
+                    'id, display_name'
+                )
+                .order('display_name');
+
+
+            profiles =
+                data || [];
+        }
+
+
+        async function loadSeasonGames() {
+
+            const {
+                data
+            } = await supabase
+                .from('games')
+                .select(
+                    'id, week, kickoff_at'
+                )
+                .eq(
+                    'season',
+                    currentSeason
+                );
+
+
+            seasonGames =
+                data || [];
+        }
+
 
         async function loadGames() {
 
             const {
-                data,
-                error
+                data
             } = await supabase
                 .from('games')
                 .select(`
@@ -1513,82 +1287,27 @@
                     'week',
                     currentWeek
                 )
-                .order(
-                    'kickoff_at'
-                );
-
-
-            if (error) {
-
-                loadingDiv.textContent =
-                    'Error loading games: ' +
-                    error.message;
-
-                return;
-            }
+                .order('kickoff_at');
 
 
             currentGames =
                 data || [];
 
 
-            loadingDiv.style.display =
+            $('loading').style.display =
                 'none';
         }
 
 
-        // --------------------------------------------------
-        // PROFILES
-        // --------------------------------------------------
-
-        async function loadProfiles() {
-
-            const {
-                data,
-                error
-            } = await supabase
-                .from('profiles')
-                .select(
-                    'id, display_name'
-                )
-                .order(
-                    'display_name'
-                );
-
-
-            if (error) {
-
-                familyPicksDiv.textContent =
-                    'Error loading players: ' +
-                    error.message;
-
-                return;
-            }
-
-
-            profiles =
-                data || [];
-        }
-
-
-        // --------------------------------------------------
-        // MY SEASON PICKS
-        // --------------------------------------------------
-
         async function loadMySeasonPicks() {
 
             const {
-                data,
-                error
+                data
             } = await supabase
                 .from('picks')
-                .select(`
-                    id,
-                    week,
-                    team_id,
-                    game_id,
-                    result
-                `)
+                .select(
+                    'id, week, team_id, game_id, result'
+                )
                 .eq(
                     'player_id',
                     currentUser.id
@@ -1596,20 +1315,7 @@
                 .eq(
                     'season',
                     currentSeason
-                )
-                .order(
-                    'week'
                 );
-
-
-            if (error) {
-
-                pickMessage.textContent =
-                    'Error loading used teams: ' +
-                    error.message;
-
-                return;
-            }
 
 
             seasonPicks =
@@ -1620,40 +1326,25 @@
                 new Set(
                     seasonPicks
                         .filter(
-                            pick =>
-                                pick.week !==
+                            p =>
+                                p.week !==
                                 currentWeek
                         )
                         .map(
-                            pick =>
-                                pick.team_id
+                            p =>
+                                p.team_id
                         )
                 );
         }
 
 
-        // --------------------------------------------------
-        // MY CURRENT PICK
-        // --------------------------------------------------
-
         async function loadMyPick() {
 
             const {
-                data,
-                error
+                data
             } = await supabase
                 .from('picks')
-                .select(`
-                    id,
-                    player_id,
-                    game_id,
-                    season,
-                    week,
-                    team_id,
-                    submitted_at,
-                    updated_at,
-                    result
-                `)
+                .select('*')
                 .eq(
                     'player_id',
                     currentUser.id
@@ -1669,38 +1360,20 @@
                 .maybeSingle();
 
 
-            if (error) {
-
-                pickMessage.textContent =
-                    'Error loading your pick: ' +
-                    error.message;
-
-                return;
-            }
-
-
             currentPick =
                 data;
         }
 
 
-        // --------------------------------------------------
-        // VISIBLE WEEK PICKS
-        // --------------------------------------------------
-
         async function loadVisiblePicks() {
 
             const {
-                data,
-                error
+                data
             } = await supabase
                 .from('picks')
-                .select(`
-                    id,
-                    player_id,
-                    game_id,
-                    team_id
-                `)
+                .select(
+                    'player_id, team_id, game_id, result'
+                )
                 .eq(
                     'season',
                     currentSeason
@@ -1711,35 +1384,38 @@
                 );
 
 
-            if (error) {
-
-                familyPicksDiv.textContent =
-                    'Error loading picks: ' +
-                    error.message;
-
-                return;
-            }
-
-
             visiblePicks =
                 data || [];
         }
 
 
-        // --------------------------------------------------
-        // LOSSES
-        // --------------------------------------------------
+        async function loadVisibleSeasonPicks() {
+
+            const {
+                data
+            } = await supabase
+                .from('picks')
+                .select(
+                    'player_id, week, team_id, game_id, result'
+                )
+                .eq(
+                    'season',
+                    currentSeason
+                );
+
+
+            visibleSeasonPicks =
+                data || [];
+        }
+
 
         async function loadLossPicks() {
 
             const {
-                data,
-                error
+                data
             } = await supabase
                 .from('picks')
-                .select(
-                    'player_id, result'
-                )
+                .select('player_id')
                 .eq(
                     'season',
                     currentSeason
@@ -1750,83 +1426,111 @@
                 );
 
 
-            if (error) {
-
-                standingsDiv.textContent =
-                    'Error loading strike count: ' +
-                    error.message;
-
-                return;
-            }
-
-
             lossPicks =
                 data || [];
         }
 
 
-        // --------------------------------------------------
-        // MY PICK HISTORY
-        // --------------------------------------------------
+        function populateHistorySelectors() {
 
-        function resultInfo(
-            result
-        ) {
+            $('playerHistorySelect').innerHTML =
+                profiles.map(
+                    p =>
+                        `<option value="${p.id}">
+                            ${p.display_name}
+                        </option>`
+                ).join('');
 
-            switch (result) {
 
-                case 'win':
-                    return {
-                        label: 'WIN',
-                        className: 'win'
-                    };
+            $('playerHistorySelect').value =
+                currentUser.id;
 
-                case 'loss':
-                    return {
-                        label: 'LOSS',
-                        className: 'loss'
-                    };
 
-                case 'tie':
-                    return {
-                        label: 'TIE',
-                        className: 'tie'
-                    };
+            let weekOptions =
+                '';
 
-                case 'void':
-                    return {
-                        label: 'VOID',
-                        className: 'void'
-                    };
 
-                default:
-                    return {
-                        label: 'PENDING',
-                        className: 'pending'
-                    };
+            for (
+                let week = 1;
+                week <= currentWeek;
+                week++
+            ) {
+
+                weekOptions +=
+                    `<option value="${week}">
+                        Week ${week}
+                    </option>`;
             }
+
+
+            $('weekHistorySelect').innerHTML =
+                weekOptions;
+
+
+            $('weekHistorySelect').value =
+                currentWeek;
+        }
+
+
+        function weekIsFullyStarted(week) {
+
+            const games =
+                seasonGames.filter(
+                    game =>
+                        game.week ===
+                        week
+                );
+
+
+            if (games.length === 0) {
+                return false;
+            }
+
+
+            return games.every(
+                game =>
+                    new Date(
+                        game.kickoff_at
+                    ) <=
+                    new Date()
+            );
+        }
+
+
+        function resultInfo(result) {
+
+            if (result === 'win') {
+                return ['WIN', 'win'];
+            }
+
+            if (result === 'loss') {
+                return ['LOSS', 'loss'];
+            }
+
+            if (result === 'tie') {
+                return ['TIE', 'tie'];
+            }
+
+            if (result === 'void') {
+                return ['VOID', 'void'];
+            }
+
+            return ['PENDING', 'pending'];
         }
 
 
         function renderMyPickHistory() {
 
-            const pickByWeek =
-                new Map();
+            const pickMap =
+                new Map(
+                    seasonPicks.map(
+                        p => [p.week, p]
+                    )
+                );
 
 
-            seasonPicks.forEach(
-                pick => {
-
-                    pickByWeek.set(
-                        pick.week,
-                        pick
-                    );
-                }
-            );
-
-
-            let rows =
-                [];
+            let html =
+                '';
 
 
             for (
@@ -1836,30 +1540,24 @@
             ) {
 
                 const pick =
-                    pickByWeek.get(
-                        week
-                    );
+                    pickMap.get(week);
 
 
                 if (!pick) {
 
-                    rows.push(`
+                    html += `
                         <div class="history-row">
-
                             <div class="history-week">
                                 Week ${week}
                             </div>
-
                             <div class="history-team none">
-                                No pick
+                                No Pick
                             </div>
-
                             <div class="result-badge none">
                                 NO PICK
                             </div>
-
                         </div>
-                    `);
+                    `;
 
                     continue;
                 }
@@ -1871,177 +1569,368 @@
                     );
 
 
-                const info =
-                    resultInfo(
-                        pick.result
-                    );
+                const [
+                    label,
+                    className
+                ] = resultInfo(
+                    pick.result
+                );
 
 
-                rows.push(`
+                html += `
                     <div class="history-row">
 
                         <div class="history-week">
                             Week ${week}
                         </div>
 
-                        <div
-                            class="
-                                history-team
-                                ${info.className}
-                            "
-                        >
-                            ${
-                                team
-                                    ? team.full_name
-                                    : 'Unknown Team'
-                            }
+                        <div class="history-team ${className}">
+                            ${team?.full_name || 'Unknown Team'}
                         </div>
 
-                        <div
-                            class="
-                                result-badge
-                                ${info.className}
-                            "
-                        >
-                            ${info.label}
+                        <div class="result-badge ${className}">
+                            ${label}
                         </div>
 
                     </div>
-                `);
+                `;
             }
 
 
-            myPickHistory.innerHTML =
-                rows.join('');
+            $('myPickHistory').innerHTML =
+                html;
         }
 
 
-        // --------------------------------------------------
-        // STRIKE COUNT
-        // --------------------------------------------------
+        function renderPlayerHistory() {
 
-        function renderStandings() {
+            const playerId =
+                $('playerHistorySelect').value;
 
-            if (
-                !profiles ||
-                profiles.length === 0
-            ) {
 
-                standingsDiv.innerHTML =
-                    '<div class="standing-row">No players found.</div>';
+            const player =
+                profiles.find(
+                    p =>
+                        p.id ===
+                        playerId
+                );
 
+
+            if (!player) {
                 return;
             }
 
 
-            const standings =
-                profiles
-                    .map(
-                        profile => {
-
-                            const strikes =
-                                lossPicks.filter(
-                                    pick =>
-                                        pick.player_id ===
-                                        profile.id
-                                ).length;
+            let html =
+                '';
 
 
-                            return {
-                                ...profile,
-                                strikes
-                            };
-                        }
-                    )
-                    .sort(
-                        (a, b) => {
+            for (
+                let week = currentWeek;
+                week >= 1;
+                week--
+            ) {
 
-                            if (
-                                a.strikes !==
-                                b.strikes
-                            ) {
-
-                                return (
-                                    a.strikes -
-                                    b.strikes
-                                );
-                            }
-
-
-                            return a.display_name
-                                .localeCompare(
-                                    b.display_name
-                                );
-                        }
+                const pick =
+                    visibleSeasonPicks.find(
+                        p =>
+                            p.player_id ===
+                                playerId &&
+                            p.week ===
+                                week
                     );
 
 
-            standingsDiv.innerHTML =
-                standings
-                    .map(
-                        player => {
+                if (!pick) {
 
-                            const isEliminated =
-                                player.strikes >=
-                                maxStrikes;
+                    const fullyStarted =
+                        weekIsFullyStarted(
+                            week
+                        );
 
 
-                            const strikeWord =
-                                player.strikes === 1
-                                    ? 'strike'
-                                    : 'strikes';
+                    const label =
+                        fullyStarted
+                            ? 'No Pick'
+                            : 'Hidden / Not Revealed';
 
 
-                            return `
-                                <div class="standing-row">
+                    html += `
+                        <div class="history-row">
 
-                                    <div class="standing-name">
-                                        ${player.display_name}
-                                    </div>
+                            <div class="history-week">
+                                Week ${week}
+                            </div>
 
-                                    <div class="standing-info">
+                            <div class="history-team ${
+                                fullyStarted
+                                    ? 'none'
+                                    : 'hidden'
+                            }">
+                                ${label}
+                            </div>
 
-                                        <div class="strike-count">
-                                            ${player.strikes}
-                                            ${strikeWord}
-                                        </div>
+                            <div class="result-badge ${
+                                fullyStarted
+                                    ? 'none'
+                                    : 'hidden'
+                            }">
+                                ${
+                                    fullyStarted
+                                        ? 'NO PICK'
+                                        : 'HIDDEN'
+                                }
+                            </div>
 
-                                        <div class="${
-                                            isEliminated
-                                                ? 'eliminated'
-                                                : 'alive'
-                                        }">
+                        </div>
+                    `;
 
-                                            ${
-                                                isEliminated
-                                                    ? 'Eliminated'
-                                                    : 'Still Alive'
-                                            }
+                    continue;
+                }
 
-                                        </div>
 
-                                    </div>
+                const team =
+                    teamMap.get(
+                        pick.team_id
+                    );
 
-                                </div>
-                            `;
-                        }
-                    )
-                    .join('');
+
+                const [
+                    label,
+                    className
+                ] = resultInfo(
+                    pick.result
+                );
+
+
+                html += `
+                    <div class="history-row">
+
+                        <div class="history-week">
+                            Week ${week}
+                        </div>
+
+                        <div class="history-team ${className}">
+                            ${team?.full_name || 'Unknown Team'}
+                        </div>
+
+                        <div class="result-badge ${className}">
+                            ${label}
+                        </div>
+
+                    </div>
+                `;
+            }
+
+
+            $('playerHistory').innerHTML =
+                html;
         }
 
 
-        // --------------------------------------------------
-        // CURRENT PICK
-        // --------------------------------------------------
+        function renderWeekHistory() {
+
+            const week =
+                Number(
+                    $('weekHistorySelect').value
+                );
+
+
+            const fullyStarted =
+                weekIsFullyStarted(
+                    week
+                );
+
+
+            $('weekHistory').innerHTML =
+                profiles.map(
+                    player => {
+
+                        const pick =
+                            visibleSeasonPicks.find(
+                                p =>
+                                    p.player_id ===
+                                        player.id &&
+                                    p.week ===
+                                        week
+                            );
+
+
+                        let text;
+                        let className =
+                            'week-player-pick';
+
+
+                        if (pick) {
+
+                            const team =
+                                teamMap.get(
+                                    pick.team_id
+                                );
+
+                            text =
+                                team?.full_name ||
+                                'Unknown Team';
+
+                        } else if (
+                            fullyStarted
+                        ) {
+
+                            text =
+                                'No Pick';
+
+                            className +=
+                                ' hidden-pick';
+
+                        } else {
+
+                            text =
+                                'Hidden / Not Revealed';
+
+                            className +=
+                                ' hidden-pick';
+                        }
+
+
+                        return `
+                            <div class="week-history-row">
+
+                                <div class="week-player-name">
+                                    ${player.display_name}
+                                </div>
+
+                                <div class="${className}">
+                                    ${text}
+                                </div>
+
+                            </div>
+                        `;
+                    }
+                ).join('');
+        }
+
+
+        function renderStandings() {
+
+            $('standings').innerHTML =
+                profiles.map(
+                    player => {
+
+                        const strikes =
+                            lossPicks.filter(
+                                p =>
+                                    p.player_id ===
+                                    player.id
+                            ).length;
+
+
+                        const eliminated =
+                            strikes >=
+                            maxStrikes;
+
+
+                        return `
+                            <div class="standing-row">
+
+                                <div class="standing-name">
+                                    ${player.display_name}
+                                </div>
+
+                                <div class="standing-info">
+
+                                    <div class="strike-count">
+                                        ${strikes}
+                                        ${
+                                            strikes === 1
+                                                ? 'strike'
+                                                : 'strikes'
+                                        }
+                                    </div>
+
+                                    <div class="${
+                                        eliminated
+                                            ? 'eliminated'
+                                            : 'alive'
+                                    }">
+                                        ${
+                                            eliminated
+                                                ? 'Eliminated'
+                                                : 'Still Alive'
+                                        }
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        `;
+                    }
+                ).join('');
+        }
+
+
+        function renderFamilyPicks() {
+
+            $('familyPicks').innerHTML =
+                profiles.map(
+                    player => {
+
+                        const pick =
+                            visiblePicks.find(
+                                p =>
+                                    p.player_id ===
+                                    player.id
+                            );
+
+
+                        const team =
+                            pick
+                                ? teamMap.get(
+                                    pick.team_id
+                                )
+                                : null;
+
+
+                        return `
+                            <div class="family-row">
+
+                                <div class="player-name">
+                                    ${player.display_name}
+
+                                    ${
+                                        player.id ===
+                                        currentUser.id
+                                            ? '<span class="my-pick-label">YOU</span>'
+                                            : ''
+                                    }
+                                </div>
+
+                                <div class="${
+                                    team
+                                        ? 'player-pick'
+                                        : 'player-pick hidden-pick'
+                                }">
+                                    ${
+                                        team
+                                            ? team.full_name
+                                            : 'Hidden / Not Revealed'
+                                    }
+                                </div>
+
+                            </div>
+                        `;
+                    }
+                ).join('');
+        }
+
 
         function renderMyPick() {
 
             if (!currentPick) {
 
-                pickStatusTeam.textContent =
+                $('pickStatusTeam').textContent =
                     'No pick submitted';
 
-                pickStatusNote.textContent =
+                $('pickStatusNote').textContent =
                     'Select a team from the Pick tab.';
 
                 return;
@@ -2054,143 +1943,27 @@
                 );
 
 
+            $('pickStatusTeam').textContent =
+                team?.full_name ||
+                'Unknown Team';
+
+
             const game =
                 currentGames.find(
-                    game =>
-                        game.id ===
+                    g =>
+                        g.id ===
                         currentPick.game_id
                 );
 
 
-            pickStatusTeam.textContent =
-                team
-                    ? team.full_name
-                    : 'Unknown team';
-
-
-            if (!game) {
-
-                pickStatusNote.textContent =
-                    'Pick submitted.';
-
-                return;
-            }
-
-
-            const kickoff =
-                new Date(
-                    game.kickoff_at
-                );
-
-
-            if (
-                kickoff <=
+            $('pickStatusNote').textContent =
+                game &&
+                new Date(game.kickoff_at) <=
                 new Date()
-            ) {
-
-                pickStatusNote.textContent =
-                    'Locked. This game has started.';
-
-            } else {
-
-                pickStatusNote.textContent =
-                    'You may change this pick until kickoff.';
-            }
+                    ? 'Locked. This game has started.'
+                    : 'You may change this pick until kickoff.';
         }
 
-
-        // --------------------------------------------------
-        // FAMILY PICKS
-        // --------------------------------------------------
-
-        function renderFamilyPicks() {
-
-            if (
-                !profiles ||
-                profiles.length === 0
-            ) {
-
-                familyPicksDiv.innerHTML =
-                    '<div class="family-row">No players found.</div>';
-
-                return;
-            }
-
-
-            familyPicksDiv.innerHTML =
-                profiles
-                    .map(
-                        profile => {
-
-                            const pick =
-                                visiblePicks.find(
-                                    visiblePick =>
-                                        visiblePick.player_id ===
-                                        profile.id
-                                );
-
-
-                            let pickText =
-                                'Hidden / Not Revealed';
-
-                            let pickClass =
-                                'player-pick hidden-pick';
-
-
-                            if (pick) {
-
-                                const team =
-                                    teamMap.get(
-                                        pick.team_id
-                                    );
-
-
-                                if (team) {
-
-                                    pickText =
-                                        team.full_name;
-
-                                    pickClass =
-                                        'player-pick';
-                                }
-                            }
-
-
-                            const isMe =
-                                profile.id ===
-                                currentUser.id;
-
-
-                            return `
-                                <div class="family-row">
-
-                                    <div class="player-name">
-
-                                        ${profile.display_name}
-
-                                        ${
-                                            isMe
-                                                ? '<span class="my-pick-label">YOU</span>'
-                                                : ''
-                                        }
-
-                                    </div>
-
-                                    <div class="${pickClass}">
-                                        ${pickText}
-                                    </div>
-
-                                </div>
-                            `;
-                        }
-                    )
-                    .join('');
-        }
-
-
-        // --------------------------------------------------
-        // GAME CARDS
-        // --------------------------------------------------
 
         function renderGames() {
 
@@ -2198,172 +1971,84 @@
                 new Date();
 
 
-            if (
-                !currentGames ||
-                currentGames.length === 0
-            ) {
+            $('games').innerHTML =
+                currentGames.map(
+                    game => {
 
-                gamesDiv.innerHTML =
-                    '<p>No games found for this week yet.</p>';
+                        const away =
+                            teamMap.get(
+                                game.away_team_id
+                            );
 
-                return;
-            }
-
-
-            gamesDiv.innerHTML =
-                currentGames
-                    .map(
-                        game => {
-
-                            const awayTeam =
-                                teamMap.get(
-                                    game.away_team_id
-                                );
-
-                            const homeTeam =
-                                teamMap.get(
-                                    game.home_team_id
-                                );
+                        const home =
+                            teamMap.get(
+                                game.home_team_id
+                            );
 
 
-                            const kickoff =
-                                new Date(
-                                    game.kickoff_at
-                                );
+                        const started =
+                            new Date(
+                                game.kickoff_at
+                            ) <=
+                            now;
 
 
-                            const hasStarted =
-                                kickoff <= now;
+                        return `
+                            <div class="game-card">
 
+                                <div class="game-header">
 
-                            const formattedKickoff =
-                                kickoff.toLocaleString(
-                                    [],
-                                    {
-                                        weekday: 'short',
-                                        month: 'short',
-                                        day: 'numeric',
-                                        hour: 'numeric',
-                                        minute: '2-digit'
-                                    }
-                                );
-
-
-                            const statusText =
-                                hasStarted
-                                    ? 'Locked'
-                                    : 'Available';
-
-
-                            const statusClass =
-                                hasStarted
-                                    ? 'locked'
-                                    : 'available';
-
-
-                            const awaySelected =
-                                currentPick &&
-                                currentPick.team_id ===
-                                awayTeam.id;
-
-
-                            const homeSelected =
-                                currentPick &&
-                                currentPick.team_id ===
-                                homeTeam.id;
-
-
-                            const awayUsed =
-                                usedTeamIds.has(
-                                    awayTeam.id
-                                );
-
-
-                            const homeUsed =
-                                usedTeamIds.has(
-                                    homeTeam.id
-                                );
-
-
-                            const awayDisabled =
-                                hasStarted ||
-                                awayUsed;
-
-
-                            const homeDisabled =
-                                hasStarted ||
-                                homeUsed;
-
-
-                            return `
-                                <div class="game-card">
-
-                                    <div class="game-header">
-
-                                        <div class="kickoff">
-                                            ${formattedKickoff}
-                                        </div>
-
-                                        <div
-                                            class="
-                                                status
-                                                ${statusClass}
-                                            "
-                                        >
-                                            ${statusText}
-                                        </div>
-
+                                    <div class="kickoff">
+                                        ${
+                                            new Date(
+                                                game.kickoff_at
+                                            ).toLocaleString(
+                                                [],
+                                                {
+                                                    weekday: 'short',
+                                                    month: 'short',
+                                                    day: 'numeric',
+                                                    hour: 'numeric',
+                                                    minute: '2-digit'
+                                                }
+                                            )
+                                        }
                                     </div>
 
-
-                                    <div class="teams">
-
-                                        <button
-                                            class="
-                                                team-button
-                                                ${awaySelected ? 'selected' : ''}
-                                                ${awayUsed ? 'used' : ''}
-                                            "
-                                            data-game-id="${game.id}"
-                                            data-team-id="${awayTeam.id}"
-                                            ${awayDisabled ? 'disabled' : ''}
-                                        >
-                                            ${awayTeam.full_name}
-
-                                            ${
-                                                awayUsed
-                                                    ? '<span class="used-label">USED</span>'
-                                                    : ''
-                                            }
-                                        </button>
-
-
-                                        <button
-                                            class="
-                                                team-button
-                                                ${homeSelected ? 'selected' : ''}
-                                                ${homeUsed ? 'used' : ''}
-                                            "
-                                            data-game-id="${game.id}"
-                                            data-team-id="${homeTeam.id}"
-                                            ${homeDisabled ? 'disabled' : ''}
-                                        >
-                                            ${homeTeam.full_name}
-
-                                            ${
-                                                homeUsed
-                                                    ? '<span class="used-label">USED</span>'
-                                                    : ''
-                                            }
-                                        </button>
-
+                                    <div class="status ${
+                                        started
+                                            ? 'locked'
+                                            : 'available'
+                                    }">
+                                        ${
+                                            started
+                                                ? 'Locked'
+                                                : 'Available'
+                                        }
                                     </div>
 
                                 </div>
-                            `;
-                        }
-                    )
-                    .join('');
+
+                                <div class="teams">
+
+                                    ${teamButton(
+                                        game,
+                                        away,
+                                        started
+                                    )}
+
+                                    ${teamButton(
+                                        game,
+                                        home,
+                                        started
+                                    )}
+
+                                </div>
+
+                            </div>
+                        `;
+                    }
+                ).join('');
 
 
             document
@@ -2373,35 +2058,63 @@
                 .forEach(
                     button => {
 
-                        button.addEventListener(
-                            'click',
-                            async () => {
-
-                                const gameId =
+                        button.onclick =
+                            () =>
+                                chooseTeam(
                                     Number(
                                         button.dataset.gameId
-                                    );
-
-                                const teamId =
+                                    ),
                                     Number(
                                         button.dataset.teamId
-                                    );
-
-
-                                await chooseTeam(
-                                    gameId,
-                                    teamId
+                                    )
                                 );
-                            }
-                        );
                     }
                 );
         }
 
 
-        // --------------------------------------------------
-        // CHOOSE TEAM
-        // --------------------------------------------------
+        function teamButton(
+            game,
+            team,
+            started
+        ) {
+
+            const selected =
+                currentPick?.team_id ===
+                team.id;
+
+            const used =
+                usedTeamIds.has(
+                    team.id
+                );
+
+            const disabled =
+                started ||
+                used;
+
+
+            return `
+                <button
+                    class="
+                        team-button
+                        ${selected ? 'selected' : ''}
+                        ${used ? 'used' : ''}
+                    "
+                    data-game-id="${game.id}"
+                    data-team-id="${team.id}"
+                    ${disabled ? 'disabled' : ''}
+                >
+                    ${team.full_name}
+
+                    ${
+                        used
+                            ? '<span class="used-label">USED</span>'
+                            : ''
+                    }
+                </button>
+            `;
+        }
+
 
         async function chooseTeam(
             gameId,
@@ -2414,892 +2127,372 @@
                 );
 
 
-            if (!team) {
-                return;
-            }
-
-
             if (
-                currentPick &&
-                currentPick.team_id ===
-                teamId
-            ) {
-
-                pickMessage.textContent =
-                    'That is already your current pick.';
-
-                return;
-            }
-
-
-            if (
-                usedTeamIds.has(
-                    teamId
+                !confirm(
+                    currentPick
+                        ? `Change your pick to ${team.full_name}?`
+                        : `Submit ${team.full_name} as your Week ${currentWeek} pick?`
                 )
             ) {
-
-                pickMessage.textContent =
-                    'You already used this team earlier in the season.';
-
                 return;
             }
-
-
-            let confirmationMessage =
-                'Submit ' +
-                team.full_name +
-                ' as your Week ' +
-                currentWeek +
-                ' pick?';
-
-
-            if (currentPick) {
-
-                const oldTeam =
-                    teamMap.get(
-                        currentPick.team_id
-                    );
-
-
-                confirmationMessage =
-                    'Change your pick from ' +
-                    oldTeam.full_name +
-                    ' to ' +
-                    team.full_name +
-                    '?';
-            }
-
-
-            const confirmed =
-                confirm(
-                    confirmationMessage
-                );
-
-
-            if (!confirmed) {
-                return;
-            }
-
-
-            pickMessage.textContent =
-                'Saving pick...';
 
 
             if (!currentPick) {
 
-                await insertPick(
-                    gameId,
-                    teamId
-                );
+                await supabase
+                    .from('picks')
+                    .insert({
+                        player_id:
+                            currentUser.id,
+                        game_id:
+                            gameId,
+                        season:
+                            currentSeason,
+                        week:
+                            currentWeek,
+                        team_id:
+                            teamId
+                    });
 
             } else {
 
-                await updatePick(
-                    gameId,
-                    teamId
-                );
-            }
-        }
-
-
-        // --------------------------------------------------
-        // INSERT PICK
-        // --------------------------------------------------
-
-        async function insertPick(
-            gameId,
-            teamId
-        ) {
-
-            const {
-                error
-            } = await supabase
-                .from('picks')
-                .insert({
-                    player_id:
-                        currentUser.id,
-
-                    game_id:
-                        gameId,
-
-                    season:
-                        currentSeason,
-
-                    week:
-                        currentWeek,
-
-                    team_id:
-                        teamId
-                });
-
-
-            if (error) {
-
-                pickMessage.textContent =
-                    'Could not submit pick: ' +
-                    error.message;
-
-                return;
-            }
-
-
-            pickMessage.textContent =
-                'Pick submitted successfully.';
-
-
-            await refreshEverything();
-        }
-
-
-        // --------------------------------------------------
-        // UPDATE PICK
-        // --------------------------------------------------
-
-        async function updatePick(
-            gameId,
-            teamId
-        ) {
-
-            const {
-                error,
-                count
-            } = await supabase
-                .from('picks')
-                .update(
-                    {
+                await supabase
+                    .from('picks')
+                    .update({
                         game_id:
                             gameId,
-
                         team_id:
                             teamId
-                    },
-                    {
-                        count:
-                            'exact'
-                    }
-                )
-                .eq(
-                    'id',
-                    currentPick.id
-                );
-
-
-            if (error) {
-
-                pickMessage.textContent =
-                    'Could not change pick: ' +
-                    error.message;
-
-                return;
-            }
-
-
-            if (
-                count === 0
-            ) {
-
-                pickMessage.textContent =
-                    'The pick could not be changed. The game may have already started.';
-
-                return;
-            }
-
-
-            pickMessage.textContent =
-                'Pick changed successfully.';
-
-
-            await refreshEverything();
-        }
-
-
-        // --------------------------------------------------
-        // REFRESH
-        // --------------------------------------------------
-
-        async function refreshEverything() {
-
-            await loadMySeasonPicks();
-            await loadMyPick();
-            await loadVisiblePicks();
-            await loadLossPicks();
-
-
-            renderMyPick();
-            renderStandings();
-            renderFamilyPicks();
-            renderMyPickHistory();
-            renderGames();
-        }
-
-
-        // --------------------------------------------------
-        // COMMISSIONER WEEK BUTTONS
-        // --------------------------------------------------
-
-        document
-            .getElementById(
-                'previousWeekButton'
-            )
-            .addEventListener(
-                'click',
-                () => {
-
-                    const week =
-                        Number(
-                            adminWeek.value
-                        );
-
-
-                    if (
-                        week > 1
-                    ) {
-
-                        adminWeek.value =
-                            week - 1;
-                    }
-                }
-            );
-
-
-        document
-            .getElementById(
-                'nextWeekButton'
-            )
-            .addEventListener(
-                'click',
-                () => {
-
-                    const week =
-                        Number(
-                            adminWeek.value
-                        );
-
-
-                    if (
-                        week < 22
-                    ) {
-
-                        adminWeek.value =
-                            week + 1;
-                    }
-                }
-            );
-
-
-        // --------------------------------------------------
-        // SAVE WEEK
-        // --------------------------------------------------
-
-        document
-            .getElementById(
-                'saveWeekButton'
-            )
-            .addEventListener(
-                'click',
-                async () => {
-
-                    if (
-                        !currentProfile ||
-                        !currentProfile.is_commissioner
-                    ) {
-
-                        return;
-                    }
-
-
-                    const season =
-                        Number(
-                            adminSeason.value
-                        );
-
-                    const week =
-                        Number(
-                            adminWeek.value
-                        );
-
-
-                    if (
-                        !Number.isInteger(
-                            season
-                        ) ||
-                        season < 2020 ||
-                        season > 2100
-                    ) {
-
-                        commissionerMessage.textContent =
-                            'Enter a valid season.';
-
-                        return;
-                    }
-
-
-                    if (
-                        !Number.isInteger(
-                            week
-                        ) ||
-                        week < 1 ||
-                        week > 22
-                    ) {
-
-                        commissionerMessage.textContent =
-                            'Week must be between 1 and 22.';
-
-                        return;
-                    }
-
-
-                    const confirmed =
-                        confirm(
-                            'Change the active pool to ' +
-                            season +
-                            ' Week ' +
-                            week +
-                            '?'
-                        );
-
-
-                    if (!confirmed) {
-                        return;
-                    }
-
-
-                    commissionerMessage.textContent =
-                        'Saving week...';
-
-
-                    const {
-                        error: updateError
-                    } = await supabase
-                        .from(
-                            'pool_settings'
-                        )
-                        .update({
-                            current_season:
-                                season,
-
-                            current_week:
-                                week,
-
-                            updated_at:
-                                new Date()
-                                    .toISOString()
-                        })
-                        .eq(
-                            'id',
-                            1
-                        );
-
-
-                    if (updateError) {
-
-                        commissionerMessage.textContent =
-                            'Could not change week: ' +
-                            updateError.message;
-
-                        return;
-                    }
-
-
-                    commissionerMessage.textContent =
-                        'Week changed. Syncing NFL schedule...';
-
-
-                    const {
-                        data: syncData,
-                        error: syncError
-                    } = await supabase.functions
-                        .invoke(
-                            'sync-nfl',
-                            {
-                                body: {}
-                            }
-                        );
-
-
-                    if (syncError) {
-
-                        commissionerMessage.textContent =
-                            'Week changed, but NFL sync failed. The automatic sync will retry within 15 minutes.';
-
-                    } else if (
-                        syncData &&
-                        syncData.success === false
-                    ) {
-
-                        commissionerMessage.textContent =
-                            'Week changed, but NFL sync returned an error: ' +
-                            syncData.error;
-
-                    } else {
-
-                        commissionerMessage.textContent =
-                            'Week changed and NFL schedule synced.';
-                    }
-
-
-                    await loadCurrentWeek();
-                }
-            );
-
-
-        // --------------------------------------------------
-        // LOGIN
-        // --------------------------------------------------
-
-        document
-            .getElementById(
-                'loginButton'
-            )
-            .addEventListener(
-                'click',
-                async () => {
-
-                    message.textContent =
-                        'Signing in...';
-
-
-                    const email =
-                        document
-                            .getElementById(
-                                'email'
-                            )
-                            .value
-                            .trim();
-
-
-                    const password =
-                        document
-                            .getElementById(
-                                'password'
-                            )
-                            .value;
-
-
-                    const {
-                        data,
-                        error
-                    } = await supabase.auth
-                        .signInWithPassword({
-                            email,
-                            password
-                        });
-
-
-                    if (error) {
-
-                        message.textContent =
-                            error.message;
-
-                        return;
-                    }
-
-
-                    message.textContent =
-                        '';
-
-
-                    await showLoggedInUser(
-                        data.user
+                    })
+                    .eq(
+                        'id',
+                        currentPick.id
                     );
-                }
-            );
+            }
 
 
-        document
-            .getElementById(
-                'password'
-            )
+            await loadCurrentWeek();
+        }
+
+
+        $('byPlayerButton').onclick =
+            () => {
+
+                $('byPlayerButton')
+                    .classList.add(
+                        'active'
+                    );
+
+                $('byWeekButton')
+                    .classList.remove(
+                        'active'
+                    );
+
+                $('playerHistoryControls')
+                    .classList.add(
+                        'active'
+                    );
+
+                $('playerHistoryView')
+                    .classList.add(
+                        'active'
+                    );
+
+                $('weekHistoryControls')
+                    .classList.remove(
+                        'active'
+                    );
+
+                $('weekHistoryView')
+                    .classList.remove(
+                        'active'
+                    );
+            };
+
+
+        $('byWeekButton').onclick =
+            () => {
+
+                $('byWeekButton')
+                    .classList.add(
+                        'active'
+                    );
+
+                $('byPlayerButton')
+                    .classList.remove(
+                        'active'
+                    );
+
+                $('weekHistoryControls')
+                    .classList.add(
+                        'active'
+                    );
+
+                $('weekHistoryView')
+                    .classList.add(
+                        'active'
+                    );
+
+                $('playerHistoryControls')
+                    .classList.remove(
+                        'active'
+                    );
+
+                $('playerHistoryView')
+                    .classList.remove(
+                        'active'
+                    );
+            };
+
+
+        $('playerHistorySelect')
             .addEventListener(
-                'keydown',
-                event => {
-
-                    if (
-                        event.key ===
-                        'Enter'
-                    ) {
-
-                        document
-                            .getElementById(
-                                'loginButton'
-                            )
-                            .click();
-                    }
-                }
+                'change',
+                renderPlayerHistory
             );
 
 
-        // --------------------------------------------------
-        // FORGOT PASSWORD
-        // --------------------------------------------------
-
-        document
-            .getElementById(
-                'forgotPasswordButton'
-            )
+        $('weekHistorySelect')
             .addEventListener(
-                'click',
-                async () => {
-
-                    const email =
-                        document
-                            .getElementById(
-                                'email'
-                            )
-                            .value
-                            .trim();
-
-
-                    if (!email) {
-
-                        message.textContent =
-                            'Enter your email address first.';
-
-                        return;
-                    }
-
-
-                    message.textContent =
-                        'Sending password reset email...';
-
-
-                    const redirectTo =
-                        window.location.origin +
-                        window.location.pathname;
-
-
-                    const {
-                        error
-                    } = await supabase.auth
-                        .resetPasswordForEmail(
-                            email,
-                            {
-                                redirectTo
-                            }
-                        );
-
-
-                    if (error) {
-
-                        message.textContent =
-                            'Could not send reset email: ' +
-                            error.message;
-
-                        return;
-                    }
-
-
-                    message.textContent =
-                        'Password reset email sent. Check your inbox and spam folder.';
-                }
+                'change',
+                renderWeekHistory
             );
 
 
-        // --------------------------------------------------
-        // RESET PASSWORD
-        // --------------------------------------------------
+        $('loginButton').onclick =
+            async () => {
 
-        document
-            .getElementById(
-                'setNewPasswordButton'
-            )
-            .addEventListener(
-                'click',
-                async () => {
-
-                    const newPassword =
-                        document
-                            .getElementById(
-                                'resetNewPassword'
-                            )
-                            .value;
-
-                    const confirmPassword =
-                        document
-                            .getElementById(
-                                'resetConfirmPassword'
-                            )
-                            .value;
+                const {
+                    data,
+                    error
+                } = await supabase.auth
+                    .signInWithPassword({
+                        email:
+                            $('email')
+                                .value
+                                .trim(),
+                        password:
+                            $('password')
+                                .value
+                    });
 
 
-                    if (
-                        newPassword.length <
-                        8
-                    ) {
+                if (error) {
 
-                        resetPasswordMessage.textContent =
-                            'Password must be at least 8 characters.';
+                    $('message').textContent =
+                        error.message;
 
-                        return;
-                    }
-
-
-                    if (
-                        newPassword !==
-                        confirmPassword
-                    ) {
-
-                        resetPasswordMessage.textContent =
-                            'Passwords do not match.';
-
-                        return;
-                    }
-
-
-                    resetPasswordMessage.textContent =
-                        'Updating password...';
-
-
-                    const {
-                        data,
-                        error
-                    } = await supabase.auth
-                        .updateUser({
-                            password:
-                                newPassword
-                        });
-
-
-                    if (error) {
-
-                        resetPasswordMessage.textContent =
-                            'Could not update password: ' +
-                            error.message;
-
-                        return;
-                    }
-
-
-                    document
-                        .getElementById(
-                            'resetNewPassword'
-                        )
-                        .value =
-                            '';
-
-                    document
-                        .getElementById(
-                            'resetConfirmPassword'
-                        )
-                        .value =
-                            '';
-
-
-                    recoveryMode =
-                        false;
-
-
-                    window.history
-                        .replaceState(
-                            {},
-                            document.title,
-                            window.location.pathname
-                        );
-
-
-                    if (
-                        data &&
-                        data.user
-                    ) {
-
-                        await showLoggedInUser(
-                            data.user
-                        );
-
-                    } else {
-
-                        showLoginScreen();
-
-                        message.textContent =
-                            'Password changed. Sign in with your new password.';
-                    }
+                    return;
                 }
-            );
 
 
-        // --------------------------------------------------
-        // CHANGE PASSWORD
-        // --------------------------------------------------
-
-        document
-            .getElementById(
-                'changePasswordButton'
-            )
-            .addEventListener(
-                'click',
-                async () => {
-
-                    const newPassword =
-                        document
-                            .getElementById(
-                                'accountNewPassword'
-                            )
-                            .value;
-
-                    const confirmPassword =
-                        document
-                            .getElementById(
-                                'accountConfirmPassword'
-                            )
-                            .value;
+                await showLoggedInUser(
+                    data.user
+                );
+            };
 
 
-                    if (
-                        newPassword.length <
-                        8
-                    ) {
+        $('forgotPasswordButton').onclick =
+            async () => {
 
-                        changePasswordMessage.textContent =
-                            'Password must be at least 8 characters.';
-
-                        return;
-                    }
+                const email =
+                    $('email')
+                        .value
+                        .trim();
 
 
-                    if (
-                        newPassword !==
-                        confirmPassword
-                    ) {
+                if (!email) {
 
-                        changePasswordMessage.textContent =
-                            'Passwords do not match.';
+                    $('message').textContent =
+                        'Enter your email address first.';
 
-                        return;
-                    }
-
-
-                    changePasswordMessage.textContent =
-                        'Changing password...';
-
-
-                    const {
-                        error
-                    } = await supabase.auth
-                        .updateUser({
-                            password:
-                                newPassword
-                        });
-
-
-                    if (error) {
-
-                        changePasswordMessage.textContent =
-                            'Could not change password: ' +
-                            error.message;
-
-                        return;
-                    }
-
-
-                    document
-                        .getElementById(
-                            'accountNewPassword'
-                        )
-                        .value =
-                            '';
-
-                    document
-                        .getElementById(
-                            'accountConfirmPassword'
-                        )
-                        .value =
-                            '';
-
-
-                    changePasswordMessage.textContent =
-                        'Password changed successfully.';
+                    return;
                 }
-            );
 
 
-        // --------------------------------------------------
-        // LOGOUT
-        // --------------------------------------------------
-
-        document
-            .getElementById(
-                'logoutButton'
-            )
-            .addEventListener(
-                'click',
-                async () => {
-
-                    await supabase.auth
-                        .signOut();
+                await supabase.auth
+                    .resetPasswordForEmail(
+                        email,
+                        {
+                            redirectTo:
+                                window.location.origin +
+                                window.location.pathname
+                        }
+                    );
 
 
-                    currentUser =
-                        null;
-
-                    currentProfile =
-                        null;
-
-                    currentPick =
-                        null;
-
-                    visiblePicks =
-                        [];
-
-                    seasonPicks =
-                        [];
-
-                    lossPicks =
-                        [];
-
-                    usedTeamIds =
-                        new Set();
+                $('message').textContent =
+                    'Password reset email sent.';
+            };
 
 
-                    commissionerPanel.style.display =
-                        'none';
+        $('setNewPasswordButton').onclick =
+            async () => {
 
-                    gamesDiv.innerHTML =
-                        '';
-
-                    familyPicksDiv.innerHTML =
-                        '';
-
-                    standingsDiv.innerHTML =
-                        '';
-
-                    myPickHistory.innerHTML =
-                        '';
-
-                    welcome.textContent =
-                        '';
-
-                    weekInfo.textContent =
-                        '';
-
-                    pickMessage.textContent =
-                        '';
-
-                    commissionerMessage.textContent =
-                        '';
-
-                    changePasswordMessage.textContent =
-                        '';
-
-                    message.textContent =
-                        'Signed out.';
+                const password =
+                    $('resetNewPassword')
+                        .value;
 
 
-                    showLoginScreen();
+                if (
+                    password !==
+                    $('resetConfirmPassword')
+                        .value
+                ) {
+
+                    $('resetPasswordMessage')
+                        .textContent =
+                        'Passwords do not match.';
+
+                    return;
                 }
-            );
 
 
-        // --------------------------------------------------
-        // AUTH EVENTS
-        // --------------------------------------------------
+                await supabase.auth
+                    .updateUser({
+                        password
+                    });
 
-        const currentUrl =
+
+                recoveryMode =
+                    false;
+
+
+                const {
+                    data
+                } = await supabase.auth
+                    .getUser();
+
+
+                await showLoggedInUser(
+                    data.user
+                );
+            };
+
+
+        $('changePasswordButton').onclick =
+            async () => {
+
+                const password =
+                    $('accountNewPassword')
+                        .value;
+
+
+                if (
+                    password !==
+                    $('accountConfirmPassword')
+                        .value
+                ) {
+
+                    $('changePasswordMessage')
+                        .textContent =
+                        'Passwords do not match.';
+
+                    return;
+                }
+
+
+                await supabase.auth
+                    .updateUser({
+                        password
+                    });
+
+
+                $('changePasswordMessage')
+                    .textContent =
+                    'Password changed successfully.';
+            };
+
+
+        $('logoutButton').onclick =
+            async () => {
+
+                await supabase.auth
+                    .signOut();
+
+                showLoginScreen();
+            };
+
+
+        $('previousWeekButton').onclick =
+            () => {
+
+                $('adminWeek').value =
+                    Math.max(
+                        1,
+                        Number(
+                            $('adminWeek').value
+                        ) - 1
+                    );
+            };
+
+
+        $('nextWeekButton').onclick =
+            () => {
+
+                $('adminWeek').value =
+                    Math.min(
+                        22,
+                        Number(
+                            $('adminWeek').value
+                        ) + 1
+                    );
+            };
+
+
+        $('saveWeekButton').onclick =
+            async () => {
+
+                const season =
+                    Number(
+                        $('adminSeason').value
+                    );
+
+                const week =
+                    Number(
+                        $('adminWeek').value
+                    );
+
+
+                await supabase
+                    .from('pool_settings')
+                    .update({
+                        current_season:
+                            season,
+                        current_week:
+                            week,
+                        updated_at:
+                            new Date()
+                                .toISOString()
+                    })
+                    .eq(
+                        'id',
+                        1
+                    );
+
+
+                await supabase.functions
+                    .invoke(
+                        'sync-nfl',
+                        {
+                            body: {}
+                        }
+                    );
+
+
+                await loadCurrentWeek();
+            };
+
+
+        const url =
             new URL(
                 window.location.href
             );
 
-        let waitingForAuthCallback =
-            currentUrl.searchParams.has(
+
+        const waitingForAuth =
+            url.searchParams.has(
                 'code'
             ) ||
             window.location.hash.includes(
@@ -3322,14 +2515,6 @@
                                 'PASSWORD_RECOVERY'
                             ) {
 
-                                waitingForAuthCallback =
-                                    false;
-
-                                currentUser =
-                                    session
-                                        ? session.user
-                                        : null;
-
                                 showResetScreen();
 
                                 return;
@@ -3338,20 +2523,12 @@
 
                             if (
                                 event ===
-                                'INITIAL_SESSION'
+                                'INITIAL_SESSION' &&
+                                !waitingForAuth
                             ) {
 
                                 if (
-                                    waitingForAuthCallback
-                                ) {
-
-                                    return;
-                                }
-
-
-                                if (
-                                    session &&
-                                    session.user
+                                    session?.user
                                 ) {
 
                                     await showLoggedInUser(
@@ -3364,20 +2541,6 @@
                                 }
                             }
 
-
-                            if (
-                                event ===
-                                'SIGNED_OUT'
-                            ) {
-
-                                if (
-                                    !recoveryMode
-                                ) {
-
-                                    showLoginScreen();
-                                }
-                            }
-
                         },
                         0
                     );
@@ -3385,35 +2548,15 @@
             );
 
 
-        // --------------------------------------------------
-        // SERVICE WORKER
-        // --------------------------------------------------
-
         if (
-            'serviceWorker' in navigator
+            'serviceWorker' in
+            navigator
         ) {
 
-            window.addEventListener(
-                'load',
-                async () => {
-
-                    try {
-
-                        await navigator
-                            .serviceWorker
-                            .register(
-                                './service-worker.js'
-                            );
-
-                    } catch (error) {
-
-                        console.error(
-                            'Service worker registration failed:',
-                            error
-                        );
-                    }
-                }
-            );
+            navigator.serviceWorker
+                .register(
+                    './service-worker.js'
+                );
         }
 
     </script>
