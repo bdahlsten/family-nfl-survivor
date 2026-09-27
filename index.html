@@ -299,20 +299,30 @@ async function saveNotificationPreferences(){
 });
 
 $('testNotificationButton').onclick=async()=>{
+    const message=$('notificationMessage');
+    const button=$('testNotificationButton');
+
+    message.textContent='Sending server push...';
+    button.disabled=true;
+
     try{
         if(Notification.permission!=='granted')throw new Error('Enable push notifications first.');
+
         const registration=await getPushRegistration();
         const subscription=await registration.pushManager.getSubscription();
         if(!subscription)throw new Error('Enable push notifications first.');
-        await registration.showNotification('Family Survivor',{
-            body:'Test successful. Push notifications are enabled on this device.',
-            icon:'./app-icon-192.png',
-            badge:'./app-icon-192.png',
-            data:{url:'./'}
-        });
-        $('notificationMessage').textContent='Test notification sent on this device.';
+
+        const{data,error}=await supabase.functions.invoke('send-push',{body:{}});
+
+        if(error)throw error;
+        if(!data?.success)throw new Error(data?.error||'Push notification was not sent.');
+
+        message.textContent=`Server push sent successfully to ${data.sent} device${data.sent===1?'':'s'}.`;
     }catch(error){
-        $('notificationMessage').textContent=error.message;
+        console.error('Server push test failed:',error);
+        message.textContent=`Server push failed: ${error.message||error}`;
+    }finally{
+        button.disabled=false;
     }
 };
 
